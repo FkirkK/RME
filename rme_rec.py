@@ -3,7 +3,6 @@ import os
 import helper_methods
 import model_runner
 import neg_inf
-
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import numpy as np
 import global_constants as gc
@@ -88,11 +87,6 @@ X_sppmi = helper_methods.convert_to_SPPMI_matrix(X, max_row=n_items, shifted_K=S
 Y_sppmi = helper_methods.convert_to_SPPMI_matrix(Y, max_row=n_users, shifted_K=SHIFTED_K_VALUE)
 t2 = time.time()
 print 'Time : %d seconds' % (t2 - t1)
-# if DEBUG_MODE:
-#     print 'item sppmi matrix'
-#     print X_sppmi
-#     print 'user sppmi matrix'
-#     print Y_sppmi
 
 
 ######## Finally, we have train_data, vad_data, test_data,
