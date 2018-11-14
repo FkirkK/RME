@@ -3,6 +3,7 @@ import os
 import helper_methods
 import model_runner
 import neg_inf
+
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import numpy as np
 import global_constants as gc
@@ -21,34 +22,23 @@ n_components = args.n_factors
 lam = args.reg
 lam_emb = args.reg_embed
 
-unique_uid = list()
-with open(os.path.join(DATA_DIR, 'unique_uid.txt'), 'r') as f:
-    for line in f:
-        unique_uid.append(line.strip())
-
-unique_movieId = list()
-with open(os.path.join(DATA_DIR, 'unique_sid.txt'), 'r') as f:
-    for line in f:
-        unique_movieId.append(line.strip())
-n_items = len(unique_movieId)
+unique_movieId, unique_uid = helper_methods.get_unique_users_and_items(DATA_DIR)
 n_users = len(unique_uid)
+n_items = len(unique_movieId)
 print n_users, n_items
 
 if args.neg_item_inference:
-    negativeInference = neg_inf.NegativeInference()
-    glob, os = negativeInference.negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFTED_K_VALUE,
+    glob = neg_inf.negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFTED_K_VALUE,
                                                     NEGATIVE_SAMPLE_RATIO, lam, lam_emb)
 
-LOAD_NEGATIVE_MATRIX = True
-if args.model.lower() != 'rme':
-    LOAD_NEGATIVE_MATRIX = False
+LOAD_NEGATIVE_MATRIX = args.model.lower() == 'rme'
+
 recalls = np.zeros(5, dtype=np.float32) #store results of topk recommendation in range [5, 10, 20, 50, 100]
 ndcgs = np.zeros(5, dtype=np.float32)
 maps = np.zeros(5, dtype=np.float32)
 print '*************************************lam =  %.3f ******************************************' % lam
 print '*************************************lam embedding =  %.3f ******************************************' % lam_emb
 
-# train_data, train_raw, train_df = load_data(os.path.join(DATA_DIR, 'train_fold%d.csv'%FOLD))
 vad_data, vad_raw, vad_df = helper_methods.load_data(os.path.join(DATA_DIR, 'validation.csv'), shape=(n_users, n_items))
 test_data, test_raw, test_df = helper_methods.load_data(os.path.join(DATA_DIR, 'test.csv'), shape=(n_users, n_items))
 train_data, train_raw, train_df = helper_methods.load_data(os.path.join(DATA_DIR, 'train.csv'), shape=(n_users, n_items))
@@ -68,8 +58,10 @@ t2 = time.time()
 print '[INFO]: sparse matrix size of user user co-occurrence matrix: %d mb\n' % (
     (Y.data.nbytes + Y.indices.nbytes + Y.indptr.nbytes) / (1024 * 1024))
 print 'Time : %d seconds' % (t2 - t1)
-################# LOADING NEGATIVE CO-OCCURRENCE MATRIX ########################################
 
+################# LOADING NEGATIVE CO-OCCURRENCE MATRIX and converting to Negative SPPMI matrix #######################
+X_neg_sppmi = None
+Y_neg_sppmi = None
 if LOAD_NEGATIVE_MATRIX:
     print 'test loading negative_pro_pro_cooc.dat'
     t1 = time.time()
@@ -77,6 +69,12 @@ if LOAD_NEGATIVE_MATRIX:
     t2 = time.time()
     print '[INFO]: sparse matrix size of negative item item co-occurrence matrix: %d mb\n' % (
         (X_neg.data.nbytes + X_neg.indices.nbytes + X_neg.indptr.nbytes) / (1024 * 1024))
+    print 'Time : %d seconds' % (t2 - t1)
+
+    print 'converting negative co-occurrence matrix into sppmi matrix'
+    t1 = time.time()
+    X_neg_sppmi = helper_methods.convert_to_SPPMI_matrix(X_neg, max_row=n_items, shifted_K=SHIFTED_K_VALUE)
+    t2 = time.time()
     print 'Time : %d seconds' % (t2 - t1)
 
 
@@ -96,22 +94,10 @@ print 'Time : %d seconds' % (t2 - t1)
 #     print 'user sppmi matrix'
 #     print Y_sppmi
 
-############### Negative SPPMI matrix ##########################
-X_neg_sppmi = None
-Y_neg_sppmi = None
-if LOAD_NEGATIVE_MATRIX:
-    print 'converting negative co-occurrence matrix into sppmi matrix'
-    t1 = time.time()
-    X_neg_sppmi = helper_methods.convert_to_SPPMI_matrix(X_neg, max_row=n_items, shifted_K=SHIFTED_K_VALUE)
-    t2 = time.time()
-    print 'Time : %d seconds' % (t2 - t1)
-################################################################
-
 
 ######## Finally, we have train_data, vad_data, test_data,
 # X_sppmi: item item Shifted Positive Pointwise Mutual Information matrix
 # Y_sppmi: user-user       Shifted Positive Pointwise Mutual Information matrix
-
 
 print 'Training data', train_data.shape
 print 'Validation data', vad_data.shape
@@ -152,5 +138,3 @@ for idx, topk in enumerate([5, 10, 20, 50, 100]):
                                                                                   topk, recalls[idx],
                                                                                   topk, ndcgs[idx],
                                                                                   topk, maps[idx])
-
-

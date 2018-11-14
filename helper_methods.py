@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import pandas as pd
 from scipy import sparse
@@ -57,3 +59,16 @@ def get_args_parser():
                              'neg_sample_ratio = 0.2 --> randomly sample 2 negative items for the user')
 
     return parser
+
+
+def get_unique_users_and_items(DATA_DIR):
+    unique_uid = list()
+    with open(os.path.join(DATA_DIR, 'unique_uid.txt'), 'r') as f:
+        for line in f:
+            unique_uid.append(line.strip())
+    unique_movieId = list()
+    with open(os.path.join(DATA_DIR, 'unique_sid.txt'), 'r') as f:
+        for line in f:
+            unique_movieId.append(line.strip())
+
+    return unique_movieId, unique_uid

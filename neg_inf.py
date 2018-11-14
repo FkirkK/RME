@@ -174,4 +174,4 @@ def negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFT
         os.remove(del_file)
         del_file = os.path.join(DATA_DIR, 'negative_item_item_cooc_iter%d.dat' % (i))
         os.remove(del_file)
-    return glob, os
+    return glob
