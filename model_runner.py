@@ -1,4 +1,4 @@
-
+"""Class responsible for running all methods, is initialised with all data also has logic for evaluation"""
 import os
 import numpy as np
 import rec_eval as rec_eval

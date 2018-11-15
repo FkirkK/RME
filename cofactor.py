@@ -1,3 +1,4 @@
+"""Co-factor implementation"""
 import os
 import sys
 import time

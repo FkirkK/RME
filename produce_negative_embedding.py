@@ -1,3 +1,4 @@
+"""Preprocess step for negative embedding"""
 import sys
 
 import itertools
@@ -8,7 +9,7 @@ os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
 import numpy as np
 import time
-import text_utils
+import pickle_loader
 import pandas as pd
 from scipy import sparse
 from sklearn.utils import shuffle
@@ -96,13 +97,13 @@ def produce_neg_embeddings(DATA_DIR, train_data, n_users, n_items, batch_size = 
         end_idx = start_idx[1:] + [n_users]
         X = _load_coord_matrix(start_idx, end_idx, n_items, n_items, prefix = 'item') #item item co-occurrence matrix
         print 'dumping matrix ...'
-        text_utils.save_pickle(X, os.path.join(DATA_DIR, 'negative_item_item_cooc_iter%d.dat' % (iter)))
+        pickle_loader.save_pickle(X, os.path.join(DATA_DIR, 'negative_item_item_cooc_iter%d.dat' % (iter)))
         t2 = time.time()
         print 'Time : %d seconds'%(t2-t1)
     else:
         print 'test loading model from pickle file'
         t1 = time.time()
-        X = text_utils.load_pickle(os.path.join(DATA_DIR, 'negative_item_item_cooc_iter%d.dat' % (iter)))
+        X = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'negative_item_item_cooc_iter%d.dat' % (iter)))
         t2 = time.time()
         print '[INFO]: sparse matrix size of item item negative_co-occurrence matrix: %d mb\n' % (
                                                         (X.data.nbytes + X.indices.nbytes + X.indptr.nbytes) / (1024 * 1024))

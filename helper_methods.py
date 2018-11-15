@@ -1,3 +1,4 @@
+"""Different helper methods extracted from rme_rec"""
 import os
 
 import numpy as np

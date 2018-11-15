@@ -1,3 +1,4 @@
+"""Logic for running rme in parallel TODO: Understand all of this code, think this is main logic of algorithm"""
 import os
 import sys
 import time

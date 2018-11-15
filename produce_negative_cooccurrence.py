@@ -1,3 +1,4 @@
+"""Preprocess step for negative co-occurence"""
 import sys
 
 import itertools
@@ -8,7 +9,7 @@ os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
 import numpy as np
 import time
-import text_utils
+import pickle_loader
 import pandas as pd
 from scipy import sparse
 from sklearn.utils import shuffle
@@ -136,7 +137,7 @@ start_idx = range(0, n_users, batch_size)
 end_idx = start_idx[1:] + [n_users]
 X = _load_coord_matrix(start_idx, end_idx, n_items, n_items, prefix = 'item') #item item co-occurrence matrix
 print 'dumping matrix ...'
-text_utils.save_pickle(X, os.path.join(DATA_DIR,'negative_item_item_cooc.dat'))
+pickle_loader.save_pickle(X, os.path.join(DATA_DIR, 'negative_item_item_cooc.dat'))
 t2 = time.time()
 print 'Time : %d seconds'%(t2-t1)
 

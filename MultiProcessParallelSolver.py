@@ -1,3 +1,4 @@
+"""Parallel soler used in parallel rme"""
 import numpy as np
 from multiprocessing import Queue
 import multiprocessing

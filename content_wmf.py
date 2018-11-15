@@ -1,3 +1,4 @@
+"""No idea why this is content wmf, seems like normal WMF"""
 import sys
 import time
 

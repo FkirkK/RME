@@ -1,3 +1,4 @@
+"""Wmf logic also uses content_wmf"""
 import itertools
 import os
 import sys

@@ -1,3 +1,4 @@
+"""Main class responsible for calling the runner with correct parameters"""
 import glob
 import os
 import helper_methods
@@ -7,7 +8,7 @@ os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import numpy as np
 import global_constants as gc
 import time
-import text_utils
+import pickle_loader
 
 args = helper_methods.get_args_parser().parse_args()
 DATA_DIR = os.path.join(args.data_path, args.dataset)
@@ -44,7 +45,7 @@ train_data, train_raw, train_df = helper_methods.load_data(os.path.join(DATA_DIR
 
 print 'loading pro_pro_cooc.dat'
 t1 = time.time()
-X = text_utils.load_pickle(os.path.join(DATA_DIR, 'item_item_cooc.dat'))
+X = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'item_item_cooc.dat'))
 t2 = time.time()
 print '[INFO]: sparse matrix size of item item co-occurrence matrix: %d mb\n' % (
     (X.data.nbytes + X.indices.nbytes + X.indptr.nbytes) / (1024 * 1024))
@@ -52,7 +53,7 @@ print 'Time : %d seconds' % (t2 - t1)
 
 print 'loading user_user_cooc.dat'
 t1 = time.time()
-Y = text_utils.load_pickle(os.path.join(DATA_DIR, 'user_user_cooc.dat'))
+Y = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'user_user_cooc.dat'))
 t2 = time.time()
 print '[INFO]: sparse matrix size of user user co-occurrence matrix: %d mb\n' % (
     (Y.data.nbytes + Y.indices.nbytes + Y.indptr.nbytes) / (1024 * 1024))
@@ -64,7 +65,7 @@ Y_neg_sppmi = None
 if LOAD_NEGATIVE_MATRIX:
     print 'test loading negative_pro_pro_cooc.dat'
     t1 = time.time()
-    X_neg = text_utils.load_pickle(os.path.join(DATA_DIR, 'negative_item_item_cooc.dat'))
+    X_neg = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'negative_item_item_cooc.dat'))
     t2 = time.time()
     print '[INFO]: sparse matrix size of negative item item co-occurrence matrix: %d mb\n' % (
         (X_neg.data.nbytes + X_neg.indices.nbytes + X_neg.indptr.nbytes) / (1024 * 1024))

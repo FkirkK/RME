@@ -1,3 +1,4 @@
+"""Methods extracted from rme_rec handling negative sampling"""
 import time
 import wmf
 import rec_eval
@@ -6,7 +7,7 @@ import glob
 import os
 import numpy as np
 import joblib
-import text_utils
+import pickle_loader
 import model_runner
 import helper_methods
 
@@ -79,6 +80,7 @@ def gen_neg_instances(train_data, U, VT, user_idx, DATA_DIR, n_items, neg_ratio=
         # df.to_csv(path, sep=",",header=False, index = False)
     # return df
 
+
 def negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFTED_K_VALUE, NEGATIVE_SAMPLE_RATIO, lam, lam_emb):
     U, V = None, None
     vad_data, vad_raw, vad_df = helper_methods.load_data(os.path.join(DATA_DIR, 'validation.csv'), shape=(n_users, n_items))
@@ -88,13 +90,14 @@ def negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFT
     VT = V.T
     iter, max_iter = 0, 10
     # load postivie information
-    X = text_utils.load_pickle(os.path.join(DATA_DIR, 'item_item_cooc.dat'))
-    Y = text_utils.load_pickle(os.path.join(DATA_DIR, 'user_user_cooc.dat'))
+    X = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'item_item_cooc.dat'))
+    Y = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'user_user_cooc.dat'))
     X_sppmi = helper_methods.convert_to_SPPMI_matrix(X, max_row=n_items, shifted_K=SHIFTED_K_VALUE)
     Y_sppmi = helper_methods.convert_to_SPPMI_matrix(Y, max_row=n_users, shifted_K=SHIFTED_K_VALUE)
     best_ndcg100 = 0.0
     best_iter = 1
     early_stopping = False
+
     while (iter < max_iter and not early_stopping):
         ################ Expectation step: ######################
         user_slices = rec_eval.user_idx_generator(n_users, batch_users=5000)
