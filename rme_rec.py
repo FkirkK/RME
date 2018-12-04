@@ -28,7 +28,7 @@ n_items = len(unique_movieId)
 print n_users, n_items
 
 if args.neg_item_inference:
-    glob = neg_inf.negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFTED_K_VALUE,
+    _ = neg_inf.negative_inference(DATA_DIR, save_dir, n_components, n_users, n_items, SHIFTED_K_VALUE,
                                                     NEGATIVE_SAMPLE_RATIO, lam, lam_emb)
 
 LOAD_NEGATIVE_MATRIX = args.model.lower() == 'rme'
@@ -101,7 +101,7 @@ print 'Testing data', test_data.shape
 n_jobs = 1  # default value
 model_type = 'model2'  # default value
 if os.path.exists(save_dir):
-    #clearning folder
+    #cleaning folder
     lst = glob.glob(os.path.join(save_dir, '*.*'))
     for f in lst:
         os.remove(f)
