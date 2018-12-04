@@ -146,7 +146,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
 
         self.alpha = update_alpha(self.beta, self.theta_p,
                                   self.bias_b_p, self.bias_c_p, self.global_y_p,
-                                  M, YP, FYP, self.c0, self.c1, self.lam_alpha,
+                                  M, YP, FYP, YN, FYN, self.c0, self.c1, self.lam_alpha,
                                   n_jobs=self.n_jobs, batch_size=self.batch_size,
                                   mu_u_p=self.mu_u_p)
         # print('checking user factor isnan : %d'%(np.sum(np.isnan(self.alpha))))
@@ -317,7 +317,7 @@ def get_row(Y, i):
 
 def update_alpha(beta, theta_p,
                  bias_b_p, bias_c_p, global_y_p,
-                 M, YP, FYP, c0, c1, lam_alpha,
+                 M, YP, FYP, YN, FYN, c0, c1, lam_alpha,
                  n_jobs = 8, batch_size=1000, mu_u_p=1):
     '''Update user latent factors'''
     m, n = M.shape  # m: number of users, n: number of items
@@ -330,7 +330,7 @@ def update_alpha(beta, theta_p,
         beta, theta_p=theta_p, theta_n=None,
         bias_b_p=bias_b_p, bias_c_p=bias_c_p, global_y_p=global_y_p,
         bias_b_n=None, bias_c_n=None, global_y_n=None,
-        M=M, YP=YP, FYP=FYP, YN=None, FYN=None, BTBpR=BTBpR,
+        M=M, YP=YP, FYP=FYP, YN=YN, FYN=FYN, BTBpR=BTBpR,
         c0=c0, c1=c1, f=f, mu_u_p=mu_u_p, mu_u_n=None,
         n_jobs=n_jobs, mode='hybrid'
     ).run()
