@@ -121,13 +121,13 @@ class ModelRunner:
             mu_p_p = float(kwargs.get('mu_p_p', 1.0)) #weight to indicate importance of liked item embeddings
             mu_p_n = float(kwargs.get('mu_p_n', 1.0)) #weight to indicate importance of disliked item embeddings
             mu_u_p = float(kwargs.get('mu_u_p', 1.0)) #weight to indicate importance of user embeddings
+            mu_u_n = float(kwargs.get('mu_u_n', 1.0)) #weight to indicate importance of disliked user embeddings
 
-
-            print 'mu_u_p = %.1f, mu_p_p = %.1f, mu_p_n = %.1f' % (mu_u_p, mu_p_p, mu_p_n)
+            print 'mu_u_p = %.1f, mu_u_n = %.1f, mu_p_p = %.1f, mu_p_n = %.1f' % (mu_u_p, mu_p_p, mu_p_n, mu_u_n)
             print self.save_dir
             self.clean_savedir()
 
-            RME = ParallelRME(mu_u_p=mu_u_p, mu_p_p=mu_p_p, mu_p_n=mu_p_n,
+            RME = ParallelRME(mu_u_p=mu_u_p, mu_p_p=mu_p_p, mu_p_n=mu_p_n, mu_u_n = mu_u_n,
                                  n_components=n_components, max_iter=max_iter, batch_size=3000, init_std=0.01, dtype=np.float32, n_jobs=n_jobs,
                                  random_state=98765, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
                                  lambda_alpha=lam_alpha, lambda_theta_p=lam_theta_p,

@@ -9,13 +9,14 @@ import rec_eval
 
 
 class ParallelRME(BaseEstimator, TransformerMixin):
-    def __init__(self, mu_u_p = 1, mu_p_p = 1, mu_p_n = 1, n_components=100, max_iter=10, batch_size=1000,
+    def __init__(self, mu_u_p = 1, mu_p_p = 1, mu_p_n = 1, mu_u_n = 1, n_components=100, max_iter=10, batch_size=1000,
                  init_std=0.01, dtype='float32', n_jobs=15, random_state=None,
                  save_params=False, save_dir='.', early_stopping=False,
                  verbose=False, **kwargs):
         self.mu_u_p = mu_u_p
         self.mu_p_p = mu_p_p
         self.mu_p_n = mu_p_n
+        self.mu_u_n = mu_u_n
         self.n_components = n_components
         self.max_iter = max_iter
         self.batch_size = batch_size
@@ -47,7 +48,8 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         '''
         self.lam_alpha = float(kwargs.get('lambda_alpha', 1e-1))
         self.lam_beta = float(kwargs.get('lambda_beta', 1e-1))
-        self.lam_theta_p = float(kwargs.get('lambda_gamma_p', 1e-1))
+        self.lam_theta_p = float(kwargs.get('lambda_theta_p', 1e-1))
+        self.lam_theta_n = float(kwargs.get('lambda_theta_n', 1e-1))
         self.lam_gamma_p = float(kwargs.get('lambda_gamma_p', 1e-1))
         self.lam_gamma_n = float(kwargs.get('lambda_gamma_n', 1e-5))
         self.c0 = float(kwargs.get('c0', 0.1))
@@ -72,33 +74,37 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         self.global_x_p = 0.0
         self.global_y_p = 0.0  # intercept of second factorization for user-user
 
+        self.theta_n = self.init_std * np.random.randn(n_users, self.n_components).astype(self.dtype)
         self.gamma_n = self.init_std * np.random.randn(n_projects, self.n_components).astype(self.dtype)
         self.bias_d_n = np.zeros(n_projects, dtype=self.dtype)
         self.bias_e_n = np.zeros(n_projects, dtype=self.dtype)
+        self.bias_b_n = np.zeros(n_users, dtype=self.dtype)
+        self.bias_c_n = np.zeros(n_users, dtype=self.dtype)
         # global bias
         self.global_x_n = 0.0
+        self.global_y_n = 0.0
 
 
-    def fit(self, M, XP = None, XN = None, YP = None,
-            FXP=None, FXN = None, FYP = None, vad_data=None, **kwargs):
+    def fit(self, M, XP = None, XN = None, YP = None, YN = None,
+            FXP=None, FXN = None, FYP = None, FYN = None, vad_data=None, **kwargs):
         n_users, n_projects = M.shape
         assert XP.shape == (n_projects, n_projects)
         assert XN.shape == (n_projects, n_projects)
         assert YP.shape == (n_users, n_users)
-
+        assert YN.shape == (n_users, n_users)
 
         self._init_params(n_users, n_projects)
-        self._update(M, XP, XN, YP,  FXP, FXN, FYP, vad_data, **kwargs)
+        self._update(M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, **kwargs)
         return self
 
     def transform(self, M):
         pass
 
-    def _update(self, M, XP, XN, YP,  FXP, FXN, FYP, vad_data, **kwargs):
+    def _update(self, M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, **kwargs):
         '''Model training and evaluation on validation set'''
         MT = M.T.tocsr()  # pre-compute this
         XPT, XNT, FXPT, FXNT = None, None, None, None
-        YPT, FYPT = None, None
+        YPT, FYPT, YNT, FYNT = None, None, None, None
         if XP != None:
             XPT = XP.T
         if XN != None:
@@ -111,15 +117,19 @@ class ParallelRME(BaseEstimator, TransformerMixin):
             YPT = YP.T
         if FYP != None:
             FYPT = FYP.T
+        if YN != None:
+            YNT = YN.T
+        if FYN != None:
+            FYNT = FYN.T
 
         self.vad_ndcg = -np.inf
         for i in xrange(self.max_iter):
             if self.verbose:
                 print('ITERATION #%d' % i)
-            self._update_factors(M, MT, XP, XPT, XN, XNT, YP, YPT,
-                                 FXP, FXPT, FXN, FXNT, FYP, FYPT)
-            self._update_biases(XP, XPT, XN, XNT, YP, YPT,
-                                FXP, FXPT, FXN, FXNT, FYP, FYPT)
+            self._update_factors(M, MT, XP, XPT, XN, XNT, YP, YPT, YN, YNT,
+                                 FXP, FXPT, FXN, FXNT, FYP, FYPT, FYN, FYNT)
+            self._update_biases(XP, XPT, XN, XNT, YP, YPT, YN, YNT,
+                                FXP, FXPT, FXN, FXNT, FYP, FYPT, FYN, FYNT)
             if vad_data is not None:
                 vad_ndcg = self._validate(M, vad_data, **kwargs)
                 if self.early_stopping and self.vad_ndcg > vad_ndcg:
@@ -129,8 +139,8 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                 self._save_params(i)
         pass
 
-    def _update_factors(self, M, MT, XP, XPT, XN, XNT, YP, YPT,
-                        FXP, FXPT, FXN, FXNT, FYP, FYPT, ):
+    def _update_factors(self, M, MT, XP, XPT, XN, XNT, YP, YPT, YN, YNT,
+                        FXP, FXPT, FXN, FXNT, FYP, FYPT, FYN, FYNT):
         if self.verbose:
             start_t = _writeline_and_time('\tUpdating user factors...')
 
@@ -183,16 +193,28 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                                              self.n_jobs,
                                              batch_size=self.batch_size,
                                              mu_p=self.mu_u_p)
+
         if self.verbose:
             print('\r\tUpdating user embedding factors: time=%.2f'
+                  % (time.time() - start_t))
+            start_t = _writeline_and_time('\tUpdating disliked user embedding factors...')
+        self.theta_n = update_embedding_factor(self.alpha,
+                                               self.bias_b_n, self.bias_c_n, self.global_y_n,
+                                               YNT, FYNT, self.lam_theta_n,
+                                               self.n_jobs,
+                                               batch_size=self.batch_size,
+                                               mu_p=self.mu_u_n)
+
+        if self.verbose:
+            print('\r\tUpdating disliked user embedding factors: time=%.2f'
                   % (time.time() - start_t))
 
 
 
         pass
 
-    def _update_biases(self, XP, XPT, XN, XNT, YP, YPT,
-                       FXP, FXPT, FXN, FXNT, FYP, FYPT):
+    def _update_biases(self, XP, XPT, XN, XNT, YP, YPT, YN, YNT,
+                       FXP, FXPT, FXN, FXNT, FYP, FYPT, FYN, FYNT):
         if self.verbose:
             start_t = _writeline_and_time('\tUpdating bias terms...')
 
@@ -241,6 +263,20 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                                         self.bias_b_p, self.bias_c_p, YP, FYP,
                                         self.n_jobs, batch_size=self.batch_size,
                                         mu=self.mu_u_p)
+
+        self.bias_b_n = update_bias(self.alpha, self.theta_n,
+                                    self.bias_c_n, self.global_y_n, YN, FYN,
+                                    self.n_jobs, batch_size=self.batch_size,
+                                    mu=self.mu_u_n)
+        self.bias_c_n = update_bias(self.theta_n, self.alpha,
+                                    self.bias_b_p, self.global_y_n, YN, FYN,
+                                    self.n_jobs, batch_size=self.batch_size,
+                                    mu=self.mu_u_n)
+
+        self.global_y_n = update_global(self.alpha, self.theta_n,
+                                        self.bias_b_n, self.bias_c_n, YN, FYN,
+                                        self.n_jobs, batch_size=self.batch_size,
+                                        mu=self.mu_u_n)
 
         if self.verbose:
             print('\r\tUpdating bias terms: time=%.2f'
@@ -296,7 +332,7 @@ def update_alpha(beta, theta_p,
         bias_b_n=None, bias_c_n=None, global_y_n=None,
         M=M, YP=YP, FYP=FYP, YN=None, FYN=None, BTBpR=BTBpR,
         c0=c0, c1=c1, f=f, mu_u_p=mu_u_p, mu_u_n=None,
-        n_jobs=n_jobs, mode='positive'
+        n_jobs=n_jobs, mode='hybrid'
     ).run()
 
 def update_beta(alpha, gamma_p, gamma_n,

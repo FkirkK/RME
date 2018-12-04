@@ -110,8 +110,15 @@ end_idx = start_idx[1:] + [n_users]
 Parallel(n_jobs=1)(delayed(_coord_batch)(lo, hi, train_data, prefix = 'item') for lo, hi in zip(start_idx, end_idx))
 t2 = time.time()
 print 'Time : %d seconds'%(t2-t1)
-pass
 
+t1 = time.time()
+print 'Generating user user negative_co-occurrence matrix'
+start_idx = range(0, n_items, batch_size)
+end_idx = start_idx[1:] + [n_items]
+Parallel(n_jobs=1)(delayed(_coord_batch)(lo, hi, train_data, prefix = 'user') for lo, hi in zip(start_idx, end_idx))
+t2 = time.time()
+print 'Time : %d seconds'%(t2-t1)
+pass
 
 def _load_coord_matrix(start_idx, end_idx, nrow, ncol, prefix = 'item'):
     X = sparse.csr_matrix((nrow, ncol), dtype='float32')
@@ -138,6 +145,16 @@ end_idx = start_idx[1:] + [n_users]
 X = _load_coord_matrix(start_idx, end_idx, n_items, n_items, prefix = 'item') #item item co-occurrence matrix
 print 'dumping matrix ...'
 pickle_loader.save_pickle(X, os.path.join(DATA_DIR, 'negative_item_item_cooc.dat'))
+t2 = time.time()
+print 'Time : %d seconds'%(t2-t1)
+
+print 'Loading user user negative_co-occurrence matrix and saving to pickle file for fast loading'
+t1 = time.time()
+start_idx = range(0, n_items, batch_size)
+end_idx = start_idx[1:] + [n_items]
+Y = _load_coord_matrix(start_idx, end_idx, n_users, n_users, prefix = 'user') #item item co-occurrence matrix
+print 'dumping matrix ...'
+pickle_loader.save_pickle(Y, os.path.join(DATA_DIR, 'negative_user_user_cooc.dat'))
 t2 = time.time()
 print 'Time : %d seconds'%(t2-t1)
 

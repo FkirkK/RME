@@ -10,13 +10,14 @@ def get_row(Y, i):
     lo, hi = Y.indptr[i], Y.indptr[i + 1]
     return Y.data[lo:hi], Y.indices[lo:hi]
 
+
 def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
-           bias_b_p, bias_c_p, global_y_p,
-           bias_b_n, bias_c_n, global_y_n,
-           M, YP, FYP, YN, FYN, BTBpR, c0, c1, f, mu_u_p, mu_u_n, mode):
+                           bias_b_p, bias_c_p, global_y_p,
+                           bias_b_n, bias_c_n, global_y_n,
+                           M, YP, FYP, YN, FYN, BTBpR, c0, c1, f, mu_u_p, mu_u_n, mode):
     alpha_batch = np.zeros((hi - lo, f), dtype=beta.dtype)
     if mode == None:
-        #update user factor without embedding
+        # update user factor without embedding
         for ui, u in enumerate(xrange(lo, hi)):
             m_u, idx_m_p = get_row(M, u)
             B_p = beta[idx_m_p]
@@ -44,6 +45,38 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             TTT = mu_u_p * TTT
             a = m_u.dot(c1 * B_p) + np.dot(rsd, T_j)
             A = BTBpR + B_p.T.dot((c1 - c0) * B_p) + TTT
+            alpha_batch[ui] = LA.solve(A, a)
+
+    elif mode == "hybrid":
+        for ui, u in enumerate(xrange(lo, hi)):
+            m_p, idx_p = get_row(M, u)
+            B_p = beta[idx_p]
+
+            y_u_p, idx_y_u_p = get_row(YP, u)
+            T_j_p = theta_p[idx_y_u_p]
+            rsd_p = y_u_p - bias_b_p[u] - bias_c_p[idx_y_u_p] - global_y_p
+            if FYP is not None:  # FYP is weighted matrix of YP
+                f_u_p, _ = get_row(FYP, u)
+                TTT_p = T_j_p.T.dot(T_j_p * f_u_p[:, np.newaxis])
+                rsd_p *= f_u_p
+            else:
+                TTT_p = T_j_p.T.dot(T_j_p)
+
+            y_u_n, idx_y_u_n = get_row(YN, u)
+            T_j_n = theta_n[idx_y_u_n]
+            rsd_n = y_u_n - bias_b_n[u] - bias_c_n[idx_y_u_p] - global_y_n
+            if FYN is not None:  # FYN is weighted matrix of YN
+                f_u_n, _ = get_row(FYN, u)
+                TTT_n = T_j_n.T.dot(T_j_n * f_u_n[:, np.newaxis])
+                rsd_n *= f_u_n
+            else:
+                TTT_n = T_j_n.T.dot(T_j_n)
+
+            A = BTBpR + B_p.T.dot((c1 - c0) * B_p) + \
+                c1 * mu_u_p * TTT_p + c1 * mu_u_n * TTT_n
+            a = m_p.dot(c1 * B_p) + c1 * mu_u_p * np.dot(rsd_p, T_j_p) + \
+                c1 * mu_u_n * np.dot(rsd_n, T_j_n)
+
             alpha_batch[ui] = LA.solve(A, a)
 
     out_q.put([lo, hi, alpha_batch])
