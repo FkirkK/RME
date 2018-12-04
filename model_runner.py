@@ -133,7 +133,7 @@ class ModelRunner:
                                  lambda_alpha=lam_alpha, lambda_theta_p=lam_theta_p,
                                  lambda_beta=lam_beta, lambda_gamma_p=lam_gamma_p, lambda_gamma_n=lam_gamma_n,
                                  c0=c0, c1=c1)
-            RME.fit(self.train_data, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi,
+            RME.fit(self.train_data, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi, self.Y_neg_sppmi,
                       vad_data=self.vad_data, batch_users=3000, k=vad_K, clear_invalid=False, n_jobs = 15)
 
 

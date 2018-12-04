@@ -77,6 +77,20 @@ if LOAD_NEGATIVE_MATRIX:
     t2 = time.time()
     print 'Time : %d seconds' % (t2 - t1)
 
+    print 'test loading negative_pro_pro_cooc.dat'
+    t1 = time.time()
+    Y_neg = pickle_loader.load_pickle(os.path.join(DATA_DIR, 'negative_user_user_cooc.dat'))
+    t2 = time.time()
+    print '[INFO]: sparse matrix size of negative user user co-occurrence matrix: %d mb\n' % (
+            (Y_neg.data.nbytes + Y_neg.indices.nbytes + Y_neg.indptr.nbytes) / (1024 * 1024))
+    print 'Time : %d seconds' % (t2 - t1)
+
+    print 'converting negative co-occurrence matrix into sppmi matrix'
+    t1 = time.time()
+    Y_neg_sppmi = helper_methods.convert_to_SPPMI_matrix(Y_neg, max_row=n_users, shifted_K=SHIFTED_K_VALUE)
+    t2 = time.time()
+    print 'Time : %d seconds' % (t2 - t1)
+
 
 ################################################################################################
 ########## converting CO-OCCURRENCE MATRIX INTO Shifted Positive Pointwise Mutual Information (SPPMI) matrix ###########
