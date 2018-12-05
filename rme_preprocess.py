@@ -111,6 +111,7 @@ test_raw_data = user_pro_data[int(0.8 * len(user_pro_data)):]
 test_raw_data = test_raw_data[test_raw_data['movieId'].isin(unique_sid)]
 test_raw_data = test_raw_data[test_raw_data['userId'].isin(unique_uid)]
 test_data = numerize(test_raw_data)
+test_data = test_data[['userId', 'movieId']]
 for FOLD, seed_init in enumerate([13579,98765,24680,14689,97531]):
     np.random.seed(seed_init)
     n_ratings = tr_vd_raw_data.shape[0]
@@ -155,8 +156,10 @@ for FOLD, seed_init in enumerate([13579,98765,24680,14689,97531]):
         for sid in unique_sid:
             f.write('%s\n' % sid)
 
+    train_data = train_data[['userId', 'movieId']]
     train_data.to_csv(os.path.join(DATA_DIR, CONTAINED_DIR, 'train_fold%d.csv'%FOLD), index=False)
     vad_data = numerize(vad_raw_data)
+    vad_data = vad_data[['userId', 'movieId']]
     vad_data.to_csv(os.path.join(DATA_DIR, CONTAINED_DIR, 'validation_fold%d.csv'%FOLD), index=False)
 
     test_data.to_csv(os.path.join(DATA_DIR, CONTAINED_DIR, 'test_fold%d.csv'%FOLD), index=False)
