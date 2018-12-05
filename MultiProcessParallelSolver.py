@@ -283,6 +283,46 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
                                     c1*mu_p_n * np.dot(rsd_n, G_i_n)
 
             beta_batch[pi] = LA.solve(B, a)
+    elif mode == 'positive':
+        for pi, p in enumerate(xrange(lo, hi)):
+            m_u, idx_m_p = get_row(MT, p)
+            A_u = alpha[idx_m_p]
+
+            x_pj_p, idx_x_j_p = get_row(XP, p)
+            G_i_p = gamma_p[idx_x_j_p]
+            rsd_p = x_pj_p - bias_d_p[p] - bias_e_p[idx_x_j_p] - global_x_p
+            if FXP is not None:
+                f_i_p, _ = get_row(FXP, p)
+                GTG_p = G_i_p.T.dot(G_i_p * f_i_p[:, np.newaxis])
+                rsd_p *= f_i_p
+            else:
+                GTG_p = G_i_p.T.dot(G_i_p)
+
+            GTG_p = mu_p_p * GTG_p
+            a = m_u.dot(c1 * A_u) + np.dot(rsd_p, G_i_p)
+            A = TTTpR + A_u.T.dot((c1 - c0) * A_u) + GTG_p
+            beta_batch[pi] = LA.solve(A, a)
+
+    elif mode == 'negative':
+        for pi, p in enumerate(xrange(lo, hi)):
+            m_u, idx_m_n = get_row(MT, p)
+            A_u = alpha[idx_m_n]
+
+            x_pj_n, idx_x_j_n = get_row(XN, p)
+            G_i_n = gamma_n[idx_x_j_n]
+            rsd_n = x_pj_n - bias_d_n[p] - bias_e_n[idx_x_j_n] - global_x_n
+            if FXN is not None:
+                f_i_n, _ = get_row(FXN, p)
+                GTG_n = G_i_n.T.dot(G_i_n * f_i_n[:, np.newaxis])
+                rsd_n *= f_i_n
+            else:
+                GTG_n = G_i_n.T.dot(G_i_n)
+
+            GTG_n = mu_p_n * GTG_n
+            a = m_u.dot(c1 * A_u) + np.dot(rsd_n, G_i_n)
+            A = TTTpR + A_u.T.dot((c1 - c0) * A_u) + GTG_n
+            beta_batch[pi] = LA.solve(A, a)
+
 
     out_q.put([lo, hi, beta_batch])
 
