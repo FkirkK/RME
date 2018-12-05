@@ -1,4 +1,5 @@
 """Parallel soler used in parallel rme"""
+import sys
 import numpy as np
 from multiprocessing import Queue
 import multiprocessing
@@ -100,6 +101,10 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
                 c1 * mu_u_n * np.dot(rsd_n, T_j_n)
 
             alpha_batch[ui] = LA.solve(A, a)
+
+    else:
+        print "No valid mode specified for alpha matrix updater"
+        sys.exit(1)
 
     out_q.put([lo, hi, alpha_batch])
 
@@ -322,6 +327,10 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
             a = m_u.dot(c1 * A_u) + np.dot(rsd_n, G_i_n)
             A = TTTpR + A_u.T.dot((c1 - c0) * A_u) + GTG_n
             beta_batch[pi] = LA.solve(A, a)
+
+    else:
+        print "No valid mode specified for beta matrix updater"
+        sys.exit(1)
 
 
     out_q.put([lo, hi, beta_batch])
