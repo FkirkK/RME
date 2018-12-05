@@ -144,11 +144,12 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         if self.verbose:
             start_t = _writeline_and_time('\tUpdating user factors...')
 
-        self.alpha = update_alpha(self.beta, self.theta_p,
+        self.alpha = update_alpha(self.beta, self.theta_p, self.theta_n,
                                   self.bias_b_p, self.bias_c_p, self.global_y_p,
+                                  self.bias_b_n, self.bias_c_n, self.global_y_n,
                                   M, YP, FYP, YN, FYN, self.c0, self.c1, self.lam_alpha,
                                   n_jobs=self.n_jobs, batch_size=self.batch_size,
-                                  mu_u_p=self.mu_u_p)
+                                  mu_u_p=self.mu_u_p, mu_u_n=self.mu_u_n)
         # print('checking user factor isnan : %d'%(np.sum(np.isnan(self.alpha))))
         if self.verbose:
             print('\r\tUpdating user factors: time=%.2f'
@@ -315,10 +316,11 @@ def get_row(Y, i):
     return Y.data[lo:hi], Y.indices[lo:hi]
 
 
-def update_alpha(beta, theta_p,
+def update_alpha(beta, theta_p, theta_n,
                  bias_b_p, bias_c_p, global_y_p,
+                 bias_b_n, bias_c_n, global_y_n,
                  M, YP, FYP, YN, FYN, c0, c1, lam_alpha,
-                 n_jobs = 8, batch_size=1000, mu_u_p=1):
+                 n_jobs = 8, batch_size=1000, mu_u_p=1, mu_u_n=1):
     '''Update user latent factors'''
     m, n = M.shape  # m: number of users, n: number of items
     f = beta.shape[1]  # f: number of factors
@@ -327,12 +329,12 @@ def update_alpha(beta, theta_p,
     BTBpR = BTB + lam_alpha * np.eye(f, dtype=beta.dtype)
 
     return mpps.UpdateUserFactorParallel(
-        beta, theta_p=theta_p, theta_n=None,
+        beta, theta_p=theta_p, theta_n=theta_n,
         bias_b_p=bias_b_p, bias_c_p=bias_c_p, global_y_p=global_y_p,
-        bias_b_n=None, bias_c_n=None, global_y_n=None,
+        bias_b_n=bias_b_n, bias_c_n=bias_c_n, global_y_n=global_y_n,
         M=M, YP=YP, FYP=FYP, YN=YN, FYN=FYN, BTBpR=BTBpR,
-        c0=c0, c1=c1, f=f, mu_u_p=mu_u_p, mu_u_n=None,
-        n_jobs=n_jobs, mode='hybrid'
+        c0=c0, c1=c1, f=f, mu_u_p=mu_u_p, mu_u_n=mu_u_n,
+        n_jobs=n_jobs, mode='positive'
     ).run()
 
 def update_beta(alpha, gamma_p, gamma_n,

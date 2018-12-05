@@ -115,7 +115,7 @@ t1 = time.time()
 print 'Generating user user negative_co-occurrence matrix'
 start_idx = range(0, n_items, batch_size)
 end_idx = start_idx[1:] + [n_items]
-Parallel(n_jobs=1)(delayed(_coord_batch)(lo, hi, train_data, prefix = 'user') for lo, hi in zip(start_idx, end_idx))
+Parallel(n_jobs=1)(delayed(_coord_batch)(lo, hi, train_data.T, prefix = 'user', max_neighbor_words=9999999999) for lo, hi in zip(start_idx, end_idx))
 t2 = time.time()
 print 'Time : %d seconds'%(t2-t1)
 pass

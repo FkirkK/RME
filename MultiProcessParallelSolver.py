@@ -47,6 +47,28 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             A = BTBpR + B_p.T.dot((c1 - c0) * B_p) + TTT
             alpha_batch[ui] = LA.solve(A, a)
 
+    elif mode == "negative":
+        for ui, u in enumerate(xrange(lo, hi)):
+            m_u, idx_m_p = get_row(M, u)
+            B_p = beta[idx_m_p]
+
+            y_u, idx_y_u = get_row(YN, u)
+            T_j = theta_n[idx_y_u]
+
+            rsd = y_u - bias_b_n[u] - bias_c_n[idx_y_u] - global_y_n
+
+            if FYN is not None:  # FY is weighted matrix of Y
+                f_u, _ = get_row(FYN, u)
+                TTT = T_j.T.dot(T_j * f_u[:, np.newaxis])
+                rsd *= f_u
+            else:
+                TTT = T_j.T.dot(T_j)
+
+            TTT = mu_u_n * TTT
+            a = m_u.dot(c1 * B_p) + np.dot(rsd, T_j)
+            A = BTBpR + B_p.T.dot((c1 - c0) * B_p) + TTT
+            alpha_batch[ui] = LA.solve(A, a)
+
     elif mode == "hybrid":
         for ui, u in enumerate(xrange(lo, hi)):
             m_p, idx_p = get_row(M, u)
@@ -64,7 +86,7 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
 
             y_u_n, idx_y_u_n = get_row(YN, u)
             T_j_n = theta_n[idx_y_u_n]
-            rsd_n = y_u_n - bias_b_n[u] - bias_c_n[idx_y_u_p] - global_y_n
+            rsd_n = y_u_n - bias_b_n[u] - bias_c_n[idx_y_u_n] - global_y_n
             if FYN is not None:  # FYN is weighted matrix of YN
                 f_u_n, _ = get_row(FYN, u)
                 TTT_n = T_j_n.T.dot(T_j_n * f_u_n[:, np.newaxis])
