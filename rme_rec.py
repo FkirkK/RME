@@ -8,6 +8,7 @@ os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import numpy as np
 import time
 import pickle_loader
+import io
 
 args = helper_methods.get_args_parser().parse_args()
 DATA_DIR = os.path.join(args.data_path, args.dataset)
@@ -145,9 +146,16 @@ if args.model == 'rme':
                                                          SAVED_MODEL_DIR=SAVED_MODEL_DIR,
                                                          n_components=n_components)
 end = time.time()
-print ('total running time: %d seconds'%(end-start))
-for idx, topk in enumerate([5, 10, 20, 50, 100]):
-    print 'top-%d results: recall@%d = %.4f, ndcg@%d = %.4f, map@%d = %.4f'%(topk,
-                                                                                  topk, recalls[idx],
-                                                                                  topk, ndcgs[idx],
-                                                                                  topk, maps[idx])
+if not os.path.exists('shell_result'):
+    os.mkdir('shell_result')
+with io.open('shell_result/grid_search.txt', mode='a', encoding='utf-8') as filePointer:
+    print ('total running time: %d seconds'%(end-start))
+    for idx, topk in enumerate([5, 10, 20, 50, 100]):
+        print 'top-%d results: recall@%d = %.4f, ndcg@%d = %.4f, map@%d = %.4f'%(topk,
+                                                                                      topk, recalls[idx],
+                                                                                      topk, ndcgs[idx],
+                                                                                      topk, maps[idx])
+        filePointer.write('top-%d results: recall@%d = %.4f, ndcg@%d = %.4f, map@%d = %.4f \n'%(topk,
+                                                                                      topk, recalls[idx],
+                                                                                      topk, ndcgs[idx],
+                                                                                      topk, maps[idx]))
