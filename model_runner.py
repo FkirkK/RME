@@ -2,7 +2,6 @@
 import os
 import numpy as np
 import rec_eval as rec_eval
-import global_constants as constants
 from parallel_rme import ParallelRME
 import cofactor as cofactor
 import wmf
@@ -12,9 +11,10 @@ class ModelRunner:
 
     def __init__(self, train_data, vad_data, test_data,
                  X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                 save_dir ):
+                 save_dir, data_dir):
 
         self.save_dir = save_dir
+        self.DATA_DIR = data_dir
 
         self.train_data = train_data
         self.test_data = test_data
@@ -38,7 +38,7 @@ class ModelRunner:
         recall_all = np.zeros(5, dtype=np.float32)
         ndcg_all = np.zeros(5, dtype=np.float32)  
         map_all = np.zeros(5, dtype=np.float32)
-        PRED_DIR = os.path.join(constants.DATA_DIR, 'prediction-temp')
+        PRED_DIR = os.path.join(self.DATA_DIR, 'prediction-temp')
         if not os.path.exists(PRED_DIR): os.mkdir(PRED_DIR)
         else:
             for f in glob.glob(os.path.join(PRED_DIR, '*.npz')):
@@ -69,6 +69,7 @@ class ModelRunner:
 
     def run(self, type, n_jobs = 16, n_components = 100, max_iter = 50, vad_K = 100, **kwargs):
         saved_model = kwargs.get('saved_model', False)
+        SAVED_MODEL_DIR = kwargs.get('SAVED_MODEL_DIR', "")
         if saved_model:
             MODELS_DIR = 'MODELS'
             if not os.path.exists(MODELS_DIR): os.mkdir(MODELS_DIR)
@@ -89,7 +90,7 @@ class ModelRunner:
             U, V = wmf.decompose(self.train_data, self.vad_data, num_factors=n_components, lam=lam)
             (recall_all, ndcg_all, map_all) = self.eval(U, V)
             if saved_model:
-                model_out_name = os.path.join(constants.SAVED_MODLE_DIR, 'WMF_K%d_lambda%.4f.npz' % (n_components, lam))
+                model_out_name = os.path.join(SAVED_MODEL_DIR, 'WMF_K%d_lambda%.4f.npz' % (n_components, lam))
                 np.savez(model_out_name, U=U, V=V)
 
         elif type == 'cofactor':
@@ -111,7 +112,7 @@ class ModelRunner:
             (recall_all, ndcg_all, map_all) = self.eval(U, V)
             recall100, ndcg100, map100 = recall_all[-1], ndcg_all[-1], map_all[-1]
             if saved_model:
-                model_out_name = os.path.join(constants.SAVED_MODLE_DIR, 'Cofactor_K%d_lambda%.4f.npz' % (n_components, lam))
+                model_out_name = os.path.join(SAVED_MODEL_DIR, 'Cofactor_K%d_lambda%.4f.npz' % (n_components, lam))
                 np.savez(model_out_name, U=U, V=V)
 
 
@@ -146,7 +147,7 @@ class ModelRunner:
             (recall_all, ndcg_all, map_all) = self.eval(U, V)
             recall100, ndcg100, map100 = recall_all[-1], ndcg_all[-1], map_all[-1]
             if saved_model:
-                model_out_name = os.path.join(constants.SAVED_MODLE_DIR, 'RME_K%d_lambda%.4f.npz' % (n_components, lam))
+                model_out_name = os.path.join(SAVED_MODEL_DIR, 'RME_K%d_lambda%.4f.npz' % (n_components, lam))
                 np.savez(model_out_name, U=U, V=V)
 
         else:

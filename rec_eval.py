@@ -1,7 +1,5 @@
 import bottleneck as bn
 import numpy as np
-import gc
-import global_constants as constants
 from scipy import sparse
 
 import json

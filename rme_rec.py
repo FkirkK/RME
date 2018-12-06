@@ -6,15 +6,13 @@ import model_runner
 import neg_inf
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import numpy as np
-import global_constants as gc
 import time
 import pickle_loader
 
 args = helper_methods.get_args_parser().parse_args()
 DATA_DIR = os.path.join(args.data_path, args.dataset)
-gc.DATA_DIR = DATA_DIR
-gc.SAVED_MODLE_DIR = args.saved_model_path
-gc.PRED_DIR = os.path.join(DATA_DIR, 'prediction-temp')
+SAVED_MODEL_DIR = args.saved_model_path
+PRED_DIR = os.path.join(DATA_DIR, 'prediction-temp')
 SHIFTED_K_VALUE = args.s
 NEGATIVE_SAMPLE_RATIO = args.neg_sample_ratio
 save_dir = os.path.join(DATA_DIR, 'model_tmp_res')
@@ -124,21 +122,24 @@ else:
 
 
 runner = model_runner.ModelRunner(train_data, vad_data, test_data, X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                       save_dir=save_dir)
+                       save_dir=save_dir, data_dir=DATA_DIR)
 
 start = time.time()
 if args.model == 'wmf':
     (recalls, ndcgs, maps) = runner.run("wmf", n_jobs=n_jobs, lam=lam,
                                                          saved_model = True,
+                                                         SAVED_MODEL_DIR=SAVED_MODEL_DIR,
                                                          n_components = n_components)
 if args.model == 'cofactor':
     (recalls, ndcgs, maps) = runner.run("cofactor", n_jobs=n_jobs,
                                                         lam=lam,
                                                          saved_model=True,
+                                                         SAVED_MODEL_DIR=SAVED_MODEL_DIR,
                                                          n_components=n_components)
 if args.model == 'rme':
     (recalls, ndcgs, maps) = runner.run("rme", n_jobs=n_jobs,lam=lam, lam_emb = lam_emb,
                                                          saved_model=True,
+                                                         SAVED_MODEL_DIR=SAVED_MODEL_DIR,
                                                          n_components=n_components)
 end = time.time()
 print ('total running time: %d seconds'%(end-start))
