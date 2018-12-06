@@ -19,6 +19,8 @@ save_dir = os.path.join(DATA_DIR, 'model_tmp_res')
 n_components = args.n_factors
 lam = args.reg
 lam_emb = args.reg_embed
+user_cooc = args.user_cooc
+item_cooc = args.item_cooc
 
 unique_movieId, unique_uid = helper_methods.get_unique_users_and_items(DATA_DIR)
 n_users = len(unique_uid)
@@ -138,6 +140,7 @@ if args.model == 'cofactor':
                                                          n_components=n_components)
 if args.model == 'rme':
     (recalls, ndcgs, maps) = runner.run("rme", n_jobs=n_jobs,lam=lam, lam_emb = lam_emb,
+                                                         user_cooc = user_cooc, item_cooc = item_cooc,
                                                          saved_model=True,
                                                          SAVED_MODEL_DIR=SAVED_MODEL_DIR,
                                                          n_components=n_components)

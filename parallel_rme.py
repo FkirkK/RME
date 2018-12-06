@@ -12,7 +12,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
     def __init__(self, mu_u_p = 1, mu_p_p = 1, mu_p_n = 1, mu_u_n = 1, n_components=100, max_iter=10, batch_size=1000,
                  init_std=0.01, dtype='float32', n_jobs=15, random_state=None,
                  save_params=False, save_dir='.', early_stopping=False,
-                 verbose=False, **kwargs):
+                 verbose=False, item_cooc="hybrid", user_cooc="hybrid", **kwargs):
         self.mu_u_p = mu_u_p
         self.mu_p_p = mu_p_p
         self.mu_p_n = mu_p_n
@@ -28,6 +28,8 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         self.save_dir = save_dir
         self.early_stopping = early_stopping
         self.verbose = verbose
+        self.item_cooc = item_cooc
+        self.user_cooc = user_cooc
 
         if type(self.random_state) is int:
             np.random.seed(self.random_state)
@@ -149,7 +151,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                                   self.bias_b_n, self.bias_c_n, self.global_y_n,
                                   M, YP, FYP, YN, FYN, self.c0, self.c1, self.lam_alpha,
                                   n_jobs=self.n_jobs, batch_size=self.batch_size,
-                                  mu_u_p=self.mu_u_p, mu_u_n=self.mu_u_n)
+                                  mu_u_p=self.mu_u_p, mu_u_n=self.mu_u_n, cooc=self.user_cooc)
         # print('checking user factor isnan : %d'%(np.sum(np.isnan(self.alpha))))
         if self.verbose:
             print('\r\tUpdating user factors: time=%.2f'
@@ -160,7 +162,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                                 self.bias_d_n, self.bias_e_n, self.global_x_n,
                                 MT, XP, FXP, XN, FXN, self.c0, self.c1, self.lam_beta,
                                 self.n_jobs, batch_size=self.batch_size,
-                                mu_p_p = self.mu_p_p, mu_p_n = self.mu_p_n)
+                                mu_p_p = self.mu_p_p, mu_p_n = self.mu_p_n, cooc=self.item_cooc)
         # print('checking project factor isnan : %d' % (np.sum(np.isnan(self.beta))))
         if self.verbose:
             print('\r\tUpdating project factors: time=%.2f'
@@ -320,7 +322,7 @@ def update_alpha(beta, theta_p, theta_n,
                  bias_b_p, bias_c_p, global_y_p,
                  bias_b_n, bias_c_n, global_y_n,
                  M, YP, FYP, YN, FYN, c0, c1, lam_alpha,
-                 n_jobs = 8, batch_size=1000, mu_u_p=1, mu_u_n=1):
+                 n_jobs = 8, batch_size=1000, mu_u_p=1, mu_u_n=1, cooc="hybrid"):
     '''Update user latent factors'''
     m, n = M.shape  # m: number of users, n: number of items
     f = beta.shape[1]  # f: number of factors
@@ -334,7 +336,7 @@ def update_alpha(beta, theta_p, theta_n,
         bias_b_n=bias_b_n, bias_c_n=bias_c_n, global_y_n=global_y_n,
         M=M, YP=YP, FYP=FYP, YN=YN, FYN=FYN, BTBpR=BTBpR,
         c0=c0, c1=c1, f=f, mu_u_p=mu_u_p, mu_u_n=mu_u_n,
-        n_jobs=n_jobs, mode='positive'
+        n_jobs=n_jobs, mode=cooc
     ).run()
 
 def update_beta(alpha, gamma_p, gamma_n,
@@ -342,7 +344,7 @@ def update_beta(alpha, gamma_p, gamma_n,
                 bias_d_n, bias_e_n, global_x_n,
                 MT, XP, FXP, XN, FXN,
                 c0, c1, lam_beta,
-                n_jobs, batch_size=1000, mu_p_p = 1, mu_p_n = 1):
+                n_jobs, batch_size=1000, mu_p_p = 1, mu_p_n = 1, cooc = 'hybrid'):
     '''Update item latent factors/embeddings'''
     n, m = MT.shape  # m: number of users, n: number of projects
     f = alpha.shape[1]
@@ -359,7 +361,7 @@ def update_beta(alpha, gamma_p, gamma_n,
         bias_d_n=bias_d_n, bias_e_n=bias_e_n, global_x_n = global_x_n,
         MT = MT, XP = XP, FXP = FXP, XN = XN, FXN = FXN,
         TTTpR = TTTpR, c0=c0, c1=c1, f=f, mu_p_p=mu_p_p, mu_p_n=mu_p_n,
-        n_jobs=n_jobs, mode='hybrid'
+        n_jobs=n_jobs, mode=cooc
     ).run()
 
 def update_embedding_factor(beta, bias_d, bias_e, global_x, XT, FXT, lam_gamma,

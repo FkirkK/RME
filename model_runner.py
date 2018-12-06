@@ -70,6 +70,8 @@ class ModelRunner:
     def run(self, type, n_jobs = 16, n_components = 100, max_iter = 50, vad_K = 100, **kwargs):
         saved_model = kwargs.get('saved_model', False)
         SAVED_MODEL_DIR = kwargs.get('SAVED_MODEL_DIR', "")
+        item_cooc = kwargs.get('item_cooc', "hybrid")
+        user_cooc = kwargs.get('user_cooc' "hybrid")
         if saved_model:
             MODELS_DIR = 'MODELS'
             if not os.path.exists(MODELS_DIR): os.mkdir(MODELS_DIR)
@@ -133,7 +135,7 @@ class ModelRunner:
                                  random_state=98765, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
                                  lambda_alpha=lam_alpha, lambda_theta_p=lam_theta_p, lambda_theta_n=lam_theta_n,
                                  lambda_beta=lam_beta, lambda_gamma_p=lam_gamma_p, lambda_gamma_n=lam_gamma_n,
-                                 c0=c0, c1=c1)
+                                 c0=c0, c1=c1, item_cooc=item_cooc, user_cooc=user_cooc)
             RME.fit(self.train_data, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi, self.Y_neg_sppmi,
                       vad_data=self.vad_data, batch_users=3000, k=vad_K, clear_invalid=False, n_jobs = 15)
 

@@ -58,6 +58,8 @@ def get_args_parser():
     parser.add_argument('--neg_sample_ratio', default=0.2, type=float,
                         help='negative sample ratio per user. If a user consumed 10 items, and this'
                              'neg_sample_ratio = 0.2 --> randomly sample 2 negative items for the user')
+    parser.add_argument('--user_cooc', default='hybrid', type=str, help='what user co-occurrences should be used')
+    parser.add_argument('--item_cooc', default='hybrid', type=str, help='what item co-occurrences should be used')
 
     return parser
 
