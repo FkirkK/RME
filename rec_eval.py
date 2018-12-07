@@ -55,11 +55,11 @@ def prec_at_k(train_data, heldout_data, U, V, batch_users=2000, k=20,
     return mn_prec
 
 
-def parallel_recall_at_k(train_data, heldout_data, U, V, batch_users=2000, k=20,
+def parallel_recall_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000, k=20,
                 mu=None, vad_data=None, agg=np.nanmean, clear_invalid=False, n_jobs = 16, cache=False):
     n_users = train_data.shape[0]
     res = Parallel(n_jobs=n_jobs)(delayed(recall_at_k_batch)(train_data, heldout_data,
-                                                             U, V.T, user_idx, k=k, mu=mu,
+                                                             U, V.T, user_idx, PRED_DIR, k=k, mu=mu,
                                                              vad_data=vad_data, clear_invalid=clear_invalid, cache=cache)
                                   for user_idx in user_idx_generator(n_users, batch_users))
     mn_recall = np.hstack(res)
@@ -68,13 +68,13 @@ def parallel_recall_at_k(train_data, heldout_data, U, V, batch_users=2000, k=20,
         return agg(mn_recall)
     return mn_recall
 
-def recall_at_k(train_data, heldout_data, U, V, batch_users=2000, k=20,
+def recall_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000, k=20,
                 mu=None, vad_data=None, agg=np.nanmean, clear_invalid=False):
     n_users = train_data.shape[0]
     res = list()
     for user_idx in user_idx_generator(n_users, batch_users):
         res.append(recall_at_k_batch(train_data, heldout_data,
-                                     U, V.T, user_idx, k=k,
+                                     U, V.T, user_idx, PRED_DIR, k=k,
                                      mu=mu, vad_data=vad_data, clear_invalid=clear_invalid))
     mn_recall = np.hstack(res)
     if callable(agg):
@@ -118,12 +118,12 @@ def normalized_dcg(train_data, heldout_data, U, V, batch_users=2000,
     return ndcg
 
 
-def parallel_normalized_dcg_at_k(train_data, heldout_data, U, V, batch_users=2000,
+def parallel_normalized_dcg_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000,
                         k=100, mu=None, vad_data=None, agg=np.nanmean, clear_invalid=False, n_jobs=16, cache=False):
 
     n_users = train_data.shape[0]
     res = Parallel(n_jobs=n_jobs)(delayed(NDCG_binary_at_k_batch)(train_data, heldout_data, U, V.T,
-                                                                 user_idx, k=k, mu=mu,
+                                                                 user_idx, PRED_DIR, k=k, mu=mu,
                                                                  vad_data=vad_data, clear_invalid= clear_invalid, cache=cache)
                                   for user_idx in user_idx_generator(n_users, batch_users))
     ndcg = np.hstack(res)
@@ -131,14 +131,14 @@ def parallel_normalized_dcg_at_k(train_data, heldout_data, U, V, batch_users=200
     if callable(agg):
         return agg(ndcg)
     return ndcg
-def normalized_dcg_at_k(train_data, heldout_data, U, V, batch_users=2000,
+def normalized_dcg_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000,
                         k=100, mu=None, vad_data=None, agg=np.nanmean, clear_invalid=False):
 
     n_users = train_data.shape[0]
     res = list()
     for user_idx in user_idx_generator(n_users, batch_users):
         res.append(NDCG_binary_at_k_batch(train_data, heldout_data, U, V.T,
-                                          user_idx, k=k, mu=mu,
+                                          user_idx, PRED_DIR, k=k, mu=mu,
                                           vad_data=vad_data, clear_invalid= clear_invalid))
     ndcg = np.hstack(res)
     if callable(agg):
@@ -146,11 +146,11 @@ def normalized_dcg_at_k(train_data, heldout_data, U, V, batch_users=2000,
     return ndcg
 
 
-def parallel_map_at_k(train_data, heldout_data, U, V, batch_users=2000, k=100, mu=None,
+def parallel_map_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000, k=100, mu=None,
              vad_data=None, agg=np.nanmean, clear_invalid=False, n_jobs=16, cache=False):
     n_users = train_data.shape[0]
     res = Parallel(n_jobs=n_jobs)(delayed(MAP_at_k_batch)(train_data, heldout_data, U, V.T,
-                                                          user_idx, k=k, mu=mu,
+                                                          user_idx, PRED_DIR, k=k, mu=mu,
                                                           vad_data=vad_data, clear_invalid=clear_invalid, cache=cache)
                                   for user_idx in user_idx_generator(n_users, batch_users))
     map = np.hstack(res)
@@ -159,13 +159,13 @@ def parallel_map_at_k(train_data, heldout_data, U, V, batch_users=2000, k=100, m
         return agg(map)
     return map
 
-def map_at_k(train_data, heldout_data, U, V, batch_users=2000, k=100, mu=None,
+def map_at_k(train_data, heldout_data, U, V, PRED_DIR, batch_users=2000, k=100, mu=None,
              vad_data=None, agg=np.nanmean, clear_invalid=False):
 
     n_users = train_data.shape[0]
     res = list()
     for user_idx in user_idx_generator(n_users, batch_users):
-        res.append(MAP_at_k_batch(train_data, heldout_data, U, V.T, user_idx,
+        res.append(MAP_at_k_batch(train_data, heldout_data, U, V.T, user_idx, PRED_DIR,
                                   k=k, mu=mu, vad_data=vad_data, clear_invalid=clear_invalid))
     map = np.hstack(res)
     if callable(agg):
@@ -231,11 +231,11 @@ def precision_at_k_batch(train_data, heldout_data, Et, Eb, user_idx,
     return precision
 
 
-def recall_at_k_batch(train_data, heldout_data, Et, Eb, user_idx,
+def recall_at_k_batch(train_data, heldout_data, Et, Eb, user_idx, PRED_DIR,
                       k=20, normalize=True, mu=None, vad_data=None, clear_invalid = True, cache=False):
     batch_users = user_idx.stop - user_idx.start
 
-    file_path = os.path.join(constants.PRED_DIR, 'pred_%d_%d.npz'%(user_idx.start, user_idx.stop))
+    file_path = os.path.join(PRED_DIR, 'pred_%d_%d.npz'%(user_idx.start, user_idx.stop))
     if cache:
         if os.path.exists(file_path):
             X_pred = np.load(file_path)['X_pred']
@@ -306,7 +306,7 @@ def NDCG_binary_batch(train_data, heldout_data, Et, Eb, user_idx,
     return DCG / IDCG
 
 
-def NDCG_binary_at_k_batch(train_data, heldout_data, Et, Eb, user_idx,
+def NDCG_binary_at_k_batch(train_data, heldout_data, Et, Eb, user_idx, PRED_DIR,
                            mu=None, k=100, vad_data=None, clear_invalid=False, cache=False):
     '''
     normalized discounted cumulative gain@k for binary relevance
@@ -314,7 +314,7 @@ def NDCG_binary_at_k_batch(train_data, heldout_data, Et, Eb, user_idx,
     '''
     batch_users = user_idx.stop - user_idx.start
     if cache:
-        file_path = os.path.join(constants.PRED_DIR, 'pred_%d_%d.npz' % (user_idx.start, user_idx.stop))
+        file_path = os.path.join(PRED_DIR, 'pred_%d_%d.npz' % (user_idx.start, user_idx.stop))
         if os.path.exists(file_path):
             X_pred = np.load(file_path)['X_pred']
         else:
@@ -349,14 +349,14 @@ def NDCG_binary_at_k_batch(train_data, heldout_data, Et, Eb, user_idx,
     return DCG / IDCG
 
 
-def MAP_at_k_batch(train_data, heldout_data, Et, Eb, user_idx, mu=None, k=100,
+def MAP_at_k_batch(train_data, heldout_data, Et, Eb, user_idx, PRED_DIR, mu=None, k=100,
                    vad_data=None, clear_invalid = True, cache=False):
     '''
     mean average precision@k
     '''
     batch_users = user_idx.stop - user_idx.start
     if cache:
-        file_path = os.path.join(constants.PRED_DIR, 'pred_%d_%d.npz' % (user_idx.start, user_idx.stop))
+        file_path = os.path.join(PRED_DIR, 'pred_%d_%d.npz' % (user_idx.start, user_idx.stop))
         if os.path.exists(file_path):
             X_pred = np.load(file_path)['X_pred']
         else:

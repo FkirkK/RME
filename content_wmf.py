@@ -27,7 +27,7 @@ def log_surplus_confidence_matrix(B, alpha, epsilon):
     return S
 
 
-def factorize(S, num_factors, X=None, vad_data=None, num_iters=10, init_std=0.01,
+def factorize(S, num_factors, PRED_DIR, X=None, vad_data=None, num_iters=10, init_std=0.01,
               lambda_U_reg=1e-2, lambda_V_reg=100, lambda_W_reg=1e-2,
               dtype='float32', random_state=None, verbose=False,
               recompute_factors=batched_inv_joblib.recompute_factors_batched,
@@ -77,7 +77,7 @@ def factorize(S, num_factors, X=None, vad_data=None, num_iters=10, init_std=0.01
             print('\r\tUpdating item factors: time=%.2f'
                   % (time.time() - start_t))
         if vad_data is not None and not fixed_item_embeddings:
-            vad_ndcg = rec_eval.normalized_dcg_at_k(S, vad_data, U, V,
+            vad_ndcg = rec_eval.normalized_dcg_at_k(S, vad_data, U, V, PRED_DIR,
                                                     k=10,
                                                     batch_users=5000)
             if verbose:

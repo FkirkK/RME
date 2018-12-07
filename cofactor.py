@@ -99,7 +99,7 @@ class CoFacto(BaseEstimator, TransformerMixin):
         # global bias
         self.alpha = 0.0
 
-    def fit(self, X, M, F=None, vad_data=None, **kwargs):
+    def fit(self, X, M, PRED_DIR, F=None, vad_data=None, **kwargs):
         '''Fit the model to the data in X.
         Parameters
         ----------
@@ -123,13 +123,13 @@ class CoFacto(BaseEstimator, TransformerMixin):
         assert M.shape == (n_items, n_items)
 
         self._init_params(n_users, n_items)
-        self._update(X, M, F, vad_data, **kwargs)
+        self._update(X, M, F, vad_data, PRED_DIR, **kwargs)
         return self
 
     def transform(self, X):
         pass
 
-    def _update(self, X, M, F, vad_data, **kwargs):
+    def _update(self, X, M, F, vad_data, PRED_DIR, **kwargs):
         '''Model training and evaluation on validation set'''
         XT = X.T.tocsr()  # pre-compute this
         self.vad_ndcg = -np.inf
@@ -139,7 +139,7 @@ class CoFacto(BaseEstimator, TransformerMixin):
             self._update_factors(X, XT, M, F)
             self._update_biases(M, F)
             if vad_data is not None:
-                vad_ndcg = self._validate(X, vad_data, **kwargs)
+                vad_ndcg = self._validate(X, vad_data, PRED_DIR, **kwargs)
                 if self.early_stopping and self.vad_ndcg > vad_ndcg:
                     break  # we will not save the parameter for this iteration
                 self.vad_ndcg = vad_ndcg
@@ -203,10 +203,11 @@ class CoFacto(BaseEstimator, TransformerMixin):
                   % (time.time() - start_t))
         pass
 
-    def _validate(self, X, vad_data, **kwargs):
+    def _validate(self, X, vad_data, PRED_DIR, **kwargs):
         vad_ndcg = rec_eval.parallel_normalized_dcg_at_k(X, vad_data,
                                                 self.theta,
                                                 self.beta,
+                                                PRED_DIR,
                                                 **kwargs)
         if self.verbose:
             print('\tValidation NDCG@k: %.5f' % vad_ndcg)

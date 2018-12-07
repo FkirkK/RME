@@ -45,13 +45,13 @@ class ModelRunner:
                 os.remove(f)
         print 'n_components = %d, lam = %.4f, lam_emb = %.4f'%(self.n_components, self.lam, self.lam_emb)
         for index, K in enumerate(ranges):
-            recall_at_K = rec_eval.parallel_recall_at_k(self.train_data, self.test_data, U, V, k=K,
+            recall_at_K = rec_eval.parallel_recall_at_k(self.train_data, self.test_data, U, V, PRED_DIR, k=K,
                                                         vad_data=self.vad_data, n_jobs=16, clear_invalid=False, cache=True)
             print 'Test Recall@%d: \t %.4f' % (K, recall_at_K)
-            ndcg_at_K = rec_eval.parallel_normalized_dcg_at_k(self.train_data, self.test_data, U, V, k=K,
+            ndcg_at_K = rec_eval.parallel_normalized_dcg_at_k(self.train_data, self.test_data, U, V, PRED_DIR, k=K,
                                                               vad_data=self.vad_data, n_jobs=16, clear_invalid=False, cache=True)
             print 'Test NDCG@%d: \t %.4f' % (K, ndcg_at_K)
-            map_at_K = rec_eval.parallel_map_at_k(self.train_data, self.test_data, U, V, k=K,
+            map_at_K = rec_eval.parallel_map_at_k(self.train_data, self.test_data, U, V, PRED_DIR, k=K,
                                                   vad_data=self.vad_data, n_jobs=16, clear_invalid=False, cache=True)
             print 'Test MAP@%d: \t %.4f' % (K, map_at_K)
             #if K == 100:
@@ -68,10 +68,11 @@ class ModelRunner:
         return (recall_all, ndcg_all, map_all)
 
     def run(self, type, n_jobs = 16, n_components = 100, max_iter = 50, vad_K = 100, **kwargs):
+        PRED_DIR = kwargs.get('PRED_DIR', "")
         saved_model = kwargs.get('saved_model', False)
         SAVED_MODEL_DIR = kwargs.get('SAVED_MODEL_DIR', "")
         item_cooc = kwargs.get('item_cooc', "hybrid")
-        user_cooc = kwargs.get('user_cooc' "hybrid")
+        user_cooc = kwargs.get('user_cooc', "hybrid")
         if saved_model:
             MODELS_DIR = 'MODELS'
             if not os.path.exists(MODELS_DIR): os.mkdir(MODELS_DIR)
@@ -89,7 +90,7 @@ class ModelRunner:
         print '*************************************lam =  %.3f ******************************************' % lam
         print '*************************************lam embedding =  %.3f ******************************************' % lam_emb
         if type == 'wmf':
-            U, V = wmf.decompose(self.train_data, self.vad_data, num_factors=n_components, lam=lam)
+            U, V = wmf.decompose(self.train_data, self.vad_data, PRED_DIR, num_factors=n_components, lam=lam)
             (recall_all, ndcg_all, map_all) = self.eval(U, V)
             if saved_model:
                 model_out_name = os.path.join(SAVED_MODEL_DIR, 'WMF_K%d_lambda%.4f.npz' % (n_components, lam))
@@ -105,7 +106,7 @@ class ModelRunner:
                 random_state=98765, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
                 lambda_alpha=lam_alpha, lambda_theta=lam_theta, lambda_beta=lam_beta, lambda_gamma=lam_gamma, c0=c0,
                 c1=c1)
-            CoFacto.fit(self.train_data, self.X_sppmi, vad_data=self.vad_data, batch_users=3000, k=vad_K,
+            CoFacto.fit(self.train_data, self.X_sppmi, PRED_DIR=PRED_DIR, vad_data=self.vad_data, batch_users=3000, k=vad_K,
                       clear_invalid=False, n_jobs = 16)
             self.test_data.data = np.ones_like(self.test_data.data)
             n_params = len(glob.glob(os.path.join(self.save_dir, '*.npz')))
@@ -136,7 +137,7 @@ class ModelRunner:
                                  lambda_alpha=lam_alpha, lambda_theta_p=lam_theta_p, lambda_theta_n=lam_theta_n,
                                  lambda_beta=lam_beta, lambda_gamma_p=lam_gamma_p, lambda_gamma_n=lam_gamma_n,
                                  c0=c0, c1=c1, item_cooc=item_cooc, user_cooc=user_cooc)
-            RME.fit(self.train_data, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi, self.Y_neg_sppmi,
+            RME.fit(self.train_data, PRED_DIR, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi, self.Y_neg_sppmi,
                       vad_data=self.vad_data, batch_users=3000, k=vad_K, clear_invalid=False, n_jobs = 15)
 
 

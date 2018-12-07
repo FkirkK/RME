@@ -132,18 +132,21 @@ if args.model == 'wmf':
     (recalls, ndcgs, maps) = runner.run("wmf", n_jobs=n_jobs, lam=lam,
                                                          saved_model = True,
                                                          SAVED_MODEL_DIR=SAVED_MODEL_DIR,
+                                                         PRED_DIR=PRED_DIR,
                                                          n_components = n_components)
 if args.model == 'cofactor':
     (recalls, ndcgs, maps) = runner.run("cofactor", n_jobs=n_jobs,
                                                         lam=lam,
                                                          saved_model=True,
                                                          SAVED_MODEL_DIR=SAVED_MODEL_DIR,
+                                                         PRED_DIR=PRED_DIR,
                                                          n_components=n_components)
 if args.model == 'rme':
     (recalls, ndcgs, maps) = runner.run("rme", n_jobs=n_jobs,lam=lam, lam_emb = lam_emb,
                                                          user_cooc = user_cooc, item_cooc = item_cooc,
                                                          saved_model=True,
                                                          SAVED_MODEL_DIR=SAVED_MODEL_DIR,
+                                                         PRED_DIR=PRED_DIR,
                                                          n_components=n_components)
 end = time.time()
 if not os.path.exists('shell_result'):
@@ -155,7 +158,8 @@ with io.open('shell_result/grid_search.txt', mode='a', encoding='utf-8') as file
                                                                                       topk, recalls[idx],
                                                                                       topk, ndcgs[idx],
                                                                                       topk, maps[idx])
-        filePointer.write('top-%d results: recall@%d = %.4f, ndcg@%d = %.4f, map@%d = %.4f \n'%(topk,
+        filePointer.write(u'top-%d results: recall@%d = %.4f, ndcg@%d = %.4f, map@%d = %.4f \n'%(topk,
                                                                                       topk, recalls[idx],
                                                                                       topk, ndcgs[idx],
                                                                                       topk, maps[idx]))
+    filePointer.write(u'\n')

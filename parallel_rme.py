@@ -87,7 +87,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         self.global_y_n = 0.0
 
 
-    def fit(self, M, XP = None, XN = None, YP = None, YN = None,
+    def fit(self, M, PRED_DIR, XP = None, XN = None, YP = None, YN = None,
             FXP=None, FXN = None, FYP = None, FYN = None, vad_data=None, **kwargs):
         n_users, n_projects = M.shape
         assert XP.shape == (n_projects, n_projects)
@@ -96,13 +96,13 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         assert YN.shape == (n_users, n_users)
 
         self._init_params(n_users, n_projects)
-        self._update(M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, **kwargs)
+        self._update(M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, PRED_DIR, **kwargs)
         return self
 
     def transform(self, M):
         pass
 
-    def _update(self, M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, **kwargs):
+    def _update(self, M, XP, XN, YP, YN,  FXP, FXN, FYP, FYN, vad_data, PRED_DIR, **kwargs):
         '''Model training and evaluation on validation set'''
         MT = M.T.tocsr()  # pre-compute this
         XPT, XNT, FXPT, FXNT = None, None, None, None
@@ -133,7 +133,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
             self._update_biases(XP, XPT, XN, XNT, YP, YPT, YN, YNT,
                                 FXP, FXPT, FXN, FXNT, FYP, FYPT, FYN, FYNT)
             if vad_data is not None:
-                vad_ndcg = self._validate(M, vad_data, **kwargs)
+                vad_ndcg = self._validate(M, vad_data, PRED_DIR, **kwargs)
                 if self.early_stopping and self.vad_ndcg > vad_ndcg:
                     break  # we will not save the parameter for this iteration
                 self.vad_ndcg = vad_ndcg
@@ -286,10 +286,11 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                   % (time.time() - start_t))
         pass
 
-    def _validate(self, M, vad_data, **kwargs):
+    def _validate(self, M, vad_data, PRED_DIR, **kwargs):
         vad_ndcg = rec_eval.parallel_normalized_dcg_at_k(M, vad_data,
                                                 self.alpha,
                                                 self.beta,
+                                                PRED_DIR,
                                                 **kwargs)
         if self.verbose:
             print('\tValidation NDCG@k: %.5f' % vad_ndcg)
