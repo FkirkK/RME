@@ -1,0 +1,360 @@
+top-5 results: recall@5 = 0.1499, ndcg@5 = 0.1530, map@5 = 0.1022 
+top-10 results: recall@10 = 0.1428, ndcg@10 = 0.1451, map@10 = 0.0808 
+top-20 results: recall@20 = 0.1407, ndcg@20 = 0.1386, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1779, ndcg@50 = 0.1479, map@50 = 0.0541 
+top-100 results: recall@100 = 0.2514, ndcg@100 = 0.1752, map@100 = 0.0554 
+
+top-5 results: recall@5 = 0.1504, ndcg@5 = 0.1537, map@5 = 0.1033 
+top-10 results: recall@10 = 0.1423, ndcg@10 = 0.1454, map@10 = 0.0812 
+top-20 results: recall@20 = 0.1439, ndcg@20 = 0.1401, map@20 = 0.0650 
+top-50 results: recall@50 = 0.1814, ndcg@50 = 0.1494, map@50 = 0.0547 
+top-100 results: recall@100 = 0.2502, ndcg@100 = 0.1753, map@100 = 0.0557 
+
+top-5 results: recall@5 = 0.1439, ndcg@5 = 0.1483, map@5 = 0.0992 
+top-10 results: recall@10 = 0.1404, ndcg@10 = 0.1425, map@10 = 0.0791 
+top-20 results: recall@20 = 0.1427, ndcg@20 = 0.1384, map@20 = 0.0637 
+top-50 results: recall@50 = 0.1770, ndcg@50 = 0.1473, map@50 = 0.0540 
+top-100 results: recall@100 = 0.2505, ndcg@100 = 0.1744, map@100 = 0.0554 
+
+top-5 results: recall@5 = 0.1464, ndcg@5 = 0.1504, map@5 = 0.1007 
+top-10 results: recall@10 = 0.1419, ndcg@10 = 0.1439, map@10 = 0.0798 
+top-20 results: recall@20 = 0.1443, ndcg@20 = 0.1398, map@20 = 0.0646 
+top-50 results: recall@50 = 0.1780, ndcg@50 = 0.1482, map@50 = 0.0545 
+top-100 results: recall@100 = 0.2489, ndcg@100 = 0.1747, map@100 = 0.0556 
+
+top-5 results: recall@5 = 0.1498, ndcg@5 = 0.1533, map@5 = 0.1025 
+top-10 results: recall@10 = 0.1436, ndcg@10 = 0.1460, map@10 = 0.0812 
+top-20 results: recall@20 = 0.1438, ndcg@20 = 0.1402, map@20 = 0.0650 
+top-50 results: recall@50 = 0.1794, ndcg@50 = 0.1486, map@50 = 0.0544 
+top-100 results: recall@100 = 0.2537, ndcg@100 = 0.1762, map@100 = 0.0558 
+
+top-5 results: recall@5 = 0.1469, ndcg@5 = 0.1513, map@5 = 0.1019 
+top-10 results: recall@10 = 0.1408, ndcg@10 = 0.1439, map@10 = 0.0800 
+top-20 results: recall@20 = 0.1414, ndcg@20 = 0.1385, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1786, ndcg@50 = 0.1481, map@50 = 0.0544 
+top-100 results: recall@100 = 0.2494, ndcg@100 = 0.1744, map@100 = 0.0554 
+
+top-5 results: recall@5 = 0.1475, ndcg@5 = 0.1519, map@5 = 0.1015 
+top-10 results: recall@10 = 0.1418, ndcg@10 = 0.1445, map@10 = 0.0801 
+top-20 results: recall@20 = 0.1428, ndcg@20 = 0.1394, map@20 = 0.0645 
+top-50 results: recall@50 = 0.1788, ndcg@50 = 0.1483, map@50 = 0.0542 
+top-100 results: recall@100 = 0.2504, ndcg@100 = 0.1749, map@100 = 0.0554 
+
+top-5 results: recall@5 = 0.1443, ndcg@5 = 0.1488, map@5 = 0.0989 
+top-10 results: recall@10 = 0.1419, ndcg@10 = 0.1436, map@10 = 0.0794 
+top-20 results: recall@20 = 0.1412, ndcg@20 = 0.1382, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1770, ndcg@50 = 0.1471, map@50 = 0.0541 
+top-100 results: recall@100 = 0.2481, ndcg@100 = 0.1736, map@100 = 0.0551 
+
+top-5 results: recall@5 = 0.1482, ndcg@5 = 0.1514, map@5 = 0.1013 
+top-10 results: recall@10 = 0.1416, ndcg@10 = 0.1441, map@10 = 0.0802 
+top-20 results: recall@20 = 0.1423, ndcg@20 = 0.1387, map@20 = 0.0643 
+top-50 results: recall@50 = 0.1785, ndcg@50 = 0.1474, map@50 = 0.0539 
+top-100 results: recall@100 = 0.2512, ndcg@100 = 0.1745, map@100 = 0.0552 
+
+top-5 results: recall@5 = 0.1463, ndcg@5 = 0.1503, map@5 = 0.1005 
+top-10 results: recall@10 = 0.1406, ndcg@10 = 0.1434, map@10 = 0.0800 
+top-20 results: recall@20 = 0.1428, ndcg@20 = 0.1393, map@20 = 0.0645 
+top-50 results: recall@50 = 0.1776, ndcg@50 = 0.1477, map@50 = 0.0543 
+top-100 results: recall@100 = 0.2496, ndcg@100 = 0.1745, map@100 = 0.0556 
+
+top-5 results: recall@5 = 0.1467, ndcg@5 = 0.1503, map@5 = 0.1012 
+top-10 results: recall@10 = 0.1419, ndcg@10 = 0.1439, map@10 = 0.0804 
+top-20 results: recall@20 = 0.1432, ndcg@20 = 0.1393, map@20 = 0.0649 
+top-50 results: recall@50 = 0.1784, ndcg@50 = 0.1476, map@50 = 0.0541 
+top-100 results: recall@100 = 0.2502, ndcg@100 = 0.1742, map@100 = 0.0552 
+
+top-5 results: recall@5 = 0.1470, ndcg@5 = 0.1505, map@5 = 0.1008 
+top-10 results: recall@10 = 0.1407, ndcg@10 = 0.1434, map@10 = 0.0798 
+top-20 results: recall@20 = 0.1420, ndcg@20 = 0.1386, map@20 = 0.0642 
+top-50 results: recall@50 = 0.1734, ndcg@50 = 0.1459, map@50 = 0.0539 
+top-100 results: recall@100 = 0.2458, ndcg@100 = 0.1725, map@100 = 0.0550 
+
+top-5 results: recall@5 = 0.1469, ndcg@5 = 0.1510, map@5 = 0.1010 
+top-10 results: recall@10 = 0.1415, ndcg@10 = 0.1443, map@10 = 0.0803 
+top-20 results: recall@20 = 0.1423, ndcg@20 = 0.1392, map@20 = 0.0644 
+top-50 results: recall@50 = 0.1780, ndcg@50 = 0.1481, map@50 = 0.0543 
+top-100 results: recall@100 = 0.2490, ndcg@100 = 0.1747, map@100 = 0.0554 
+
+top-5 results: recall@5 = 0.1521, ndcg@5 = 0.1529, map@5 = 0.1014 
+top-10 results: recall@10 = 0.1431, ndcg@10 = 0.1446, map@10 = 0.0800 
+top-20 results: recall@20 = 0.1440, ndcg@20 = 0.1398, map@20 = 0.0646 
+top-50 results: recall@50 = 0.1768, ndcg@50 = 0.1477, map@50 = 0.0544 
+top-100 results: recall@100 = 0.2517, ndcg@100 = 0.1753, map@100 = 0.0557 
+
+top-5 results: recall@5 = 0.1469, ndcg@5 = 0.1502, map@5 = 0.1009 
+top-10 results: recall@10 = 0.1409, ndcg@10 = 0.1430, map@10 = 0.0796 
+top-20 results: recall@20 = 0.1424, ndcg@20 = 0.1385, map@20 = 0.0640 
+top-50 results: recall@50 = 0.1780, ndcg@50 = 0.1475, map@50 = 0.0539 
+top-100 results: recall@100 = 0.2503, ndcg@100 = 0.1741, map@100 = 0.0550 
+
+top-5 results: recall@5 = 0.1459, ndcg@5 = 0.1498, map@5 = 0.1002 
+top-10 results: recall@10 = 0.1431, ndcg@10 = 0.1450, map@10 = 0.0811 
+top-20 results: recall@20 = 0.1442, ndcg@20 = 0.1400, map@20 = 0.0651 
+top-50 results: recall@50 = 0.1773, ndcg@50 = 0.1478, map@50 = 0.0544 
+top-100 results: recall@100 = 0.2511, ndcg@100 = 0.1749, map@100 = 0.0556 
+
+top-5 results: recall@5 = 0.1483, ndcg@5 = 0.1523, map@5 = 0.1019 
+top-10 results: recall@10 = 0.1409, ndcg@10 = 0.1441, map@10 = 0.0802 
+top-20 results: recall@20 = 0.1420, ndcg@20 = 0.1389, map@20 = 0.0643 
+top-50 results: recall@50 = 0.1785, ndcg@50 = 0.1480, map@50 = 0.0542 
+top-100 results: recall@100 = 0.2495, ndcg@100 = 0.1745, map@100 = 0.0553 
+
+top-5 results: recall@5 = 0.1454, ndcg@5 = 0.1494, map@5 = 0.0996 
+top-10 results: recall@10 = 0.1417, ndcg@10 = 0.1434, map@10 = 0.0793 
+top-20 results: recall@20 = 0.1434, ndcg@20 = 0.1394, map@20 = 0.0644 
+top-50 results: recall@50 = 0.1768, ndcg@50 = 0.1472, map@50 = 0.0540 
+top-100 results: recall@100 = 0.2506, ndcg@100 = 0.1746, map@100 = 0.0553 
+
+top-5 results: recall@5 = 0.1435, ndcg@5 = 0.1478, map@5 = 0.0990 
+top-10 results: recall@10 = 0.1413, ndcg@10 = 0.1430, map@10 = 0.0792 
+top-20 results: recall@20 = 0.1431, ndcg@20 = 0.1387, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1768, ndcg@50 = 0.1471, map@50 = 0.0540 
+top-100 results: recall@100 = 0.2489, ndcg@100 = 0.1743, map@100 = 0.0553 
+
+top-5 results: recall@5 = 0.1465, ndcg@5 = 0.1498, map@5 = 0.0998 
+top-10 results: recall@10 = 0.1414, ndcg@10 = 0.1436, map@10 = 0.0796 
+top-20 results: recall@20 = 0.1428, ndcg@20 = 0.1392, map@20 = 0.0647 
+top-50 results: recall@50 = 0.1797, ndcg@50 = 0.1484, map@50 = 0.0545 
+top-100 results: recall@100 = 0.2504, ndcg@100 = 0.1749, map@100 = 0.0556 
+
+top-5 results: recall@5 = 0.1470, ndcg@5 = 0.1507, map@5 = 0.1013 
+top-10 results: recall@10 = 0.1425, ndcg@10 = 0.1449, map@10 = 0.0814 
+top-20 results: recall@20 = 0.1434, ndcg@20 = 0.1397, map@20 = 0.0652 
+top-50 results: recall@50 = 0.1783, ndcg@50 = 0.1480, map@50 = 0.0545 
+top-100 results: recall@100 = 0.2516, ndcg@100 = 0.1752, map@100 = 0.0557 
+
+top-5 results: recall@5 = 0.1490, ndcg@5 = 0.1510, map@5 = 0.1010 
+top-10 results: recall@10 = 0.1405, ndcg@10 = 0.1429, map@10 = 0.0792 
+top-20 results: recall@20 = 0.1434, ndcg@20 = 0.1392, map@20 = 0.0644 
+top-50 results: recall@50 = 0.1801, ndcg@50 = 0.1484, map@50 = 0.0546 
+top-100 results: recall@100 = 0.2510, ndcg@100 = 0.1749, map@100 = 0.0558 
+
+top-5 results: recall@5 = 0.1488, ndcg@5 = 0.1535, map@5 = 0.1031 
+top-10 results: recall@10 = 0.1407, ndcg@10 = 0.1446, map@10 = 0.0804 
+top-20 results: recall@20 = 0.1427, ndcg@20 = 0.1404, map@20 = 0.0654 
+top-50 results: recall@50 = 0.1776, ndcg@50 = 0.1483, map@50 = 0.0548 
+top-100 results: recall@100 = 0.2496, ndcg@100 = 0.1753, map@100 = 0.0560 
+
+top-5 results: recall@5 = 0.1475, ndcg@5 = 0.1500, map@5 = 0.1014 
+top-10 results: recall@10 = 0.1412, ndcg@10 = 0.1431, map@10 = 0.0798 
+top-20 results: recall@20 = 0.1417, ndcg@20 = 0.1379, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1764, ndcg@50 = 0.1463, map@50 = 0.0536 
+top-100 results: recall@100 = 0.2495, ndcg@100 = 0.1732, map@100 = 0.0548 
+
+top-5 results: recall@5 = 0.1453, ndcg@5 = 0.1504, map@5 = 0.1007 
+top-10 results: recall@10 = 0.1408, ndcg@10 = 0.1435, map@10 = 0.0796 
+top-20 results: recall@20 = 0.1425, ndcg@20 = 0.1391, map@20 = 0.0643 
+top-50 results: recall@50 = 0.1782, ndcg@50 = 0.1479, map@50 = 0.0542 
+top-100 results: recall@100 = 0.2484, ndcg@100 = 0.1744, map@100 = 0.0553 
+
+top-5 results: recall@5 = 0.1460, ndcg@5 = 0.1493, map@5 = 0.1003 
+top-10 results: recall@10 = 0.1414, ndcg@10 = 0.1432, map@10 = 0.0801 
+top-20 results: recall@20 = 0.1441, ndcg@20 = 0.1392, map@20 = 0.0642 
+top-50 results: recall@50 = 0.1761, ndcg@50 = 0.1467, map@50 = 0.0539 
+top-100 results: recall@100 = 0.2478, ndcg@100 = 0.1733, map@100 = 0.0550 
+
+top-5 results: recall@5 = 0.1457, ndcg@5 = 0.1489, map@5 = 0.0992 
+top-10 results: recall@10 = 0.1410, ndcg@10 = 0.1429, map@10 = 0.0791 
+top-20 results: recall@20 = 0.1448, ndcg@20 = 0.1395, map@20 = 0.0647 
+top-50 results: recall@50 = 0.1772, ndcg@50 = 0.1474, map@50 = 0.0543 
+top-100 results: recall@100 = 0.2517, ndcg@100 = 0.1750, map@100 = 0.0557 
+
+top-5 results: recall@5 = 0.1447, ndcg@5 = 0.1492, map@5 = 0.0998 
+top-10 results: recall@10 = 0.1404, ndcg@10 = 0.1427, map@10 = 0.0791 
+top-20 results: recall@20 = 0.1437, ndcg@20 = 0.1391, map@20 = 0.0641 
+top-50 results: recall@50 = 0.1781, ndcg@50 = 0.1474, map@50 = 0.0539 
+top-100 results: recall@100 = 0.2509, ndcg@100 = 0.1741, map@100 = 0.0550 
+
+top-5 results: recall@5 = 0.1461, ndcg@5 = 0.1494, map@5 = 0.1000 
+top-10 results: recall@10 = 0.1408, ndcg@10 = 0.1431, map@10 = 0.0796 
+top-20 results: recall@20 = 0.1414, ndcg@20 = 0.1382, map@20 = 0.0640 
+top-50 results: recall@50 = 0.1775, ndcg@50 = 0.1466, map@50 = 0.0535 
+top-100 results: recall@100 = 0.2490, ndcg@100 = 0.1737, map@100 = 0.0549 
+
+top-5 results: recall@5 = 0.1476, ndcg@5 = 0.1517, map@5 = 0.1015 
+top-10 results: recall@10 = 0.1422, ndcg@10 = 0.1443, map@10 = 0.0796 
+top-20 results: recall@20 = 0.1438, ndcg@20 = 0.1395, map@20 = 0.0639 
+top-50 results: recall@50 = 0.1785, ndcg@50 = 0.1477, map@50 = 0.0538 
+top-100 results: recall@100 = 0.2509, ndcg@100 = 0.1746, map@100 = 0.0550 
+
+top-5 results: recall@5 = 0.1545, ndcg@5 = 0.1593, map@5 = 0.1071 
+top-10 results: recall@10 = 0.1482, ndcg@10 = 0.1514, map@10 = 0.0844 
+top-20 results: recall@20 = 0.1491, ndcg@20 = 0.1456, map@20 = 0.0676 
+top-50 results: recall@50 = 0.1867, ndcg@50 = 0.1547, map@50 = 0.0571 
+top-100 results: recall@100 = 0.2598, ndcg@100 = 0.1817, map@100 = 0.0582 
+
+top-5 results: recall@5 = 0.1553, ndcg@5 = 0.1595, map@5 = 0.1076 
+top-10 results: recall@10 = 0.1469, ndcg@10 = 0.1503, map@10 = 0.0840 
+top-20 results: recall@20 = 0.1482, ndcg@20 = 0.1450, map@20 = 0.0672 
+top-50 results: recall@50 = 0.1847, ndcg@50 = 0.1538, map@50 = 0.0567 
+top-100 results: recall@100 = 0.2578, ndcg@100 = 0.1808, map@100 = 0.0579 
+
+top-5 results: recall@5 = 0.1556, ndcg@5 = 0.1592, map@5 = 0.1058 
+top-10 results: recall@10 = 0.1469, ndcg@10 = 0.1502, map@10 = 0.0833 
+top-20 results: recall@20 = 0.1498, ndcg@20 = 0.1455, map@20 = 0.0672 
+top-50 results: recall@50 = 0.1873, ndcg@50 = 0.1548, map@50 = 0.0569 
+top-100 results: recall@100 = 0.2611, ndcg@100 = 0.1823, map@100 = 0.0582 
+
+top-5 results: recall@5 = 0.1538, ndcg@5 = 0.1585, map@5 = 0.1064 
+top-10 results: recall@10 = 0.1469, ndcg@10 = 0.1504, map@10 = 0.0837 
+top-20 results: recall@20 = 0.1478, ndcg@20 = 0.1450, map@20 = 0.0671 
+top-50 results: recall@50 = 0.1846, ndcg@50 = 0.1535, map@50 = 0.0568 
+top-100 results: recall@100 = 0.2566, ndcg@100 = 0.1804, map@100 = 0.0579 
+
+top-5 results: recall@5 = 0.1559, ndcg@5 = 0.1618, map@5 = 0.1099 
+top-10 results: recall@10 = 0.1487, ndcg@10 = 0.1529, map@10 = 0.0856 
+top-20 results: recall@20 = 0.1484, ndcg@20 = 0.1465, map@20 = 0.0683 
+top-50 results: recall@50 = 0.1863, ndcg@50 = 0.1553, map@50 = 0.0575 
+top-100 results: recall@100 = 0.2591, ndcg@100 = 0.1826, map@100 = 0.0588 
+
+top-5 results: recall@5 = 0.1567, ndcg@5 = 0.1619, map@5 = 0.1090 
+top-10 results: recall@10 = 0.1490, ndcg@10 = 0.1533, map@10 = 0.0858 
+top-20 results: recall@20 = 0.1506, ndcg@20 = 0.1477, map@20 = 0.0687 
+top-50 results: recall@50 = 0.1861, ndcg@50 = 0.1554, map@50 = 0.0576 
+top-100 results: recall@100 = 0.2581, ndcg@100 = 0.1823, map@100 = 0.0587 
+
+top-5 results: recall@5 = 0.1536, ndcg@5 = 0.1593, map@5 = 0.1067 
+top-10 results: recall@10 = 0.1483, ndcg@10 = 0.1521, map@10 = 0.0846 
+top-20 results: recall@20 = 0.1501, ndcg@20 = 0.1467, map@20 = 0.0680 
+top-50 results: recall@50 = 0.1868, ndcg@50 = 0.1551, map@50 = 0.0572 
+top-100 results: recall@100 = 0.2611, ndcg@100 = 0.1827, map@100 = 0.0586 
+
+top-5 results: recall@5 = 0.1537, ndcg@5 = 0.1591, map@5 = 0.1066 
+top-10 results: recall@10 = 0.1472, ndcg@10 = 0.1513, map@10 = 0.0847 
+top-20 results: recall@20 = 0.1480, ndcg@20 = 0.1455, map@20 = 0.0676 
+top-50 results: recall@50 = 0.1866, ndcg@50 = 0.1549, map@50 = 0.0574 
+top-100 results: recall@100 = 0.2580, ndcg@100 = 0.1813, map@100 = 0.0583 
+
+top-5 results: recall@5 = 0.1539, ndcg@5 = 0.1599, map@5 = 0.1077 
+top-10 results: recall@10 = 0.1476, ndcg@10 = 0.1517, map@10 = 0.0847 
+top-20 results: recall@20 = 0.1495, ndcg@20 = 0.1467, map@20 = 0.0684 
+top-50 results: recall@50 = 0.1875, ndcg@50 = 0.1556, map@50 = 0.0576 
+top-100 results: recall@100 = 0.2593, ndcg@100 = 0.1826, map@100 = 0.0588 
+
+top-5 results: recall@5 = 0.1534, ndcg@5 = 0.1596, map@5 = 0.1076 
+top-10 results: recall@10 = 0.1486, ndcg@10 = 0.1522, map@10 = 0.0849 
+top-20 results: recall@20 = 0.1508, ndcg@20 = 0.1471, map@20 = 0.0685 
+top-50 results: recall@50 = 0.1872, ndcg@50 = 0.1551, map@50 = 0.0575 
+top-100 results: recall@100 = 0.2599, ndcg@100 = 0.1825, map@100 = 0.0587 
+
+top-5 results: recall@5 = 0.1526, ndcg@5 = 0.1582, map@5 = 0.1063 
+top-10 results: recall@10 = 0.1455, ndcg@10 = 0.1500, map@10 = 0.0838 
+top-20 results: recall@20 = 0.1504, ndcg@20 = 0.1461, map@20 = 0.0676 
+top-50 results: recall@50 = 0.1867, ndcg@50 = 0.1547, map@50 = 0.0570 
+top-100 results: recall@100 = 0.2594, ndcg@100 = 0.1822, map@100 = 0.0584 
+
+top-5 results: recall@5 = 0.1558, ndcg@5 = 0.1615, map@5 = 0.1087 
+top-10 results: recall@10 = 0.1491, ndcg@10 = 0.1530, map@10 = 0.0854 
+top-20 results: recall@20 = 0.1495, ndcg@20 = 0.1472, map@20 = 0.0686 
+top-50 results: recall@50 = 0.1871, ndcg@50 = 0.1559, map@50 = 0.0578 
+top-100 results: recall@100 = 0.2613, ndcg@100 = 0.1832, map@100 = 0.0591 
+
+top-5 results: recall@5 = 0.1566, ndcg@5 = 0.1614, map@5 = 0.1085 
+top-10 results: recall@10 = 0.1481, ndcg@10 = 0.1521, map@10 = 0.0849 
+top-20 results: recall@20 = 0.1485, ndcg@20 = 0.1461, map@20 = 0.0680 
+top-50 results: recall@50 = 0.1869, ndcg@50 = 0.1552, map@50 = 0.0576 
+top-100 results: recall@100 = 0.2582, ndcg@100 = 0.1818, map@100 = 0.0586 
+
+top-5 results: recall@5 = 0.1584, ndcg@5 = 0.1622, map@5 = 0.1090 
+top-10 results: recall@10 = 0.1490, ndcg@10 = 0.1526, map@10 = 0.0854 
+top-20 results: recall@20 = 0.1495, ndcg@20 = 0.1464, map@20 = 0.0679 
+top-50 results: recall@50 = 0.1847, ndcg@50 = 0.1545, map@50 = 0.0570 
+top-100 results: recall@100 = 0.2590, ndcg@100 = 0.1820, map@100 = 0.0583 
+
+top-5 results: recall@5 = 0.1545, ndcg@5 = 0.1594, map@5 = 0.1068 
+top-10 results: recall@10 = 0.1477, ndcg@10 = 0.1513, map@10 = 0.0842 
+top-20 results: recall@20 = 0.1493, ndcg@20 = 0.1465, map@20 = 0.0681 
+top-50 results: recall@50 = 0.1872, ndcg@50 = 0.1551, map@50 = 0.0572 
+top-100 results: recall@100 = 0.2594, ndcg@100 = 0.1819, map@100 = 0.0584 
+
+top-5 results: recall@5 = 0.1549, ndcg@5 = 0.1589, map@5 = 0.1069 
+top-10 results: recall@10 = 0.1470, ndcg@10 = 0.1501, map@10 = 0.0836 
+top-20 results: recall@20 = 0.1504, ndcg@20 = 0.1456, map@20 = 0.0671 
+top-50 results: recall@50 = 0.1861, ndcg@50 = 0.1541, map@50 = 0.0567 
+top-100 results: recall@100 = 0.2582, ndcg@100 = 0.1813, map@100 = 0.0579 
+
+top-5 results: recall@5 = 0.1526, ndcg@5 = 0.1582, map@5 = 0.1060 
+top-10 results: recall@10 = 0.1458, ndcg@10 = 0.1501, map@10 = 0.0836 
+top-20 results: recall@20 = 0.1487, ndcg@20 = 0.1456, map@20 = 0.0674 
+top-50 results: recall@50 = 0.1874, ndcg@50 = 0.1546, map@50 = 0.0568 
+top-100 results: recall@100 = 0.2592, ndcg@100 = 0.1815, map@100 = 0.0580 
+
+top-5 results: recall@5 = 0.1549, ndcg@5 = 0.1606, map@5 = 0.1078 
+top-10 results: recall@10 = 0.1488, ndcg@10 = 0.1526, map@10 = 0.0845 
+top-20 results: recall@20 = 0.1495, ndcg@20 = 0.1467, map@20 = 0.0681 
+top-50 results: recall@50 = 0.1874, ndcg@50 = 0.1555, map@50 = 0.0574 
+top-100 results: recall@100 = 0.2591, ndcg@100 = 0.1823, map@100 = 0.0584 
+
+top-5 results: recall@5 = 0.1548, ndcg@5 = 0.1597, map@5 = 0.1070 
+top-10 results: recall@10 = 0.1489, ndcg@10 = 0.1519, map@10 = 0.0839 
+top-20 results: recall@20 = 0.1488, ndcg@20 = 0.1459, map@20 = 0.0677 
+top-50 results: recall@50 = 0.1858, ndcg@50 = 0.1548, map@50 = 0.0573 
+top-100 results: recall@100 = 0.2587, ndcg@100 = 0.1821, map@100 = 0.0585 
+
+top-5 results: recall@5 = 0.1538, ndcg@5 = 0.1591, map@5 = 0.1068 
+top-10 results: recall@10 = 0.1477, ndcg@10 = 0.1512, map@10 = 0.0837 
+top-20 results: recall@20 = 0.1495, ndcg@20 = 0.1465, map@20 = 0.0681 
+top-50 results: recall@50 = 0.1873, ndcg@50 = 0.1553, map@50 = 0.0573 
+top-100 results: recall@100 = 0.2590, ndcg@100 = 0.1820, map@100 = 0.0584 
+
+top-5 results: recall@5 = 0.1552, ndcg@5 = 0.1609, map@5 = 0.1086 
+top-10 results: recall@10 = 0.1480, ndcg@10 = 0.1518, map@10 = 0.0844 
+top-20 results: recall@20 = 0.1489, ndcg@20 = 0.1462, map@20 = 0.0679 
+top-50 results: recall@50 = 0.1848, ndcg@50 = 0.1545, map@50 = 0.0571 
+top-100 results: recall@100 = 0.2599, ndcg@100 = 0.1823, map@100 = 0.0585 
+
+top-5 results: recall@5 = 0.1548, ndcg@5 = 0.1583, map@5 = 0.1063 
+top-10 results: recall@10 = 0.1480, ndcg@10 = 0.1508, map@10 = 0.0842 
+top-20 results: recall@20 = 0.1492, ndcg@20 = 0.1454, map@20 = 0.0676 
+top-50 results: recall@50 = 0.1863, ndcg@50 = 0.1541, map@50 = 0.0567 
+top-100 results: recall@100 = 0.2593, ndcg@100 = 0.1813, map@100 = 0.0578 
+
+top-5 results: recall@5 = 0.1554, ndcg@5 = 0.1602, map@5 = 0.1076 
+top-10 results: recall@10 = 0.1485, ndcg@10 = 0.1519, map@10 = 0.0846 
+top-20 results: recall@20 = 0.1492, ndcg@20 = 0.1458, map@20 = 0.0678 
+top-50 results: recall@50 = 0.1861, ndcg@50 = 0.1546, map@50 = 0.0570 
+top-100 results: recall@100 = 0.2594, ndcg@100 = 0.1818, map@100 = 0.0582 
+
+top-5 results: recall@5 = 0.1513, ndcg@5 = 0.1581, map@5 = 0.1066 
+top-10 results: recall@10 = 0.1474, ndcg@10 = 0.1513, map@10 = 0.0841 
+top-20 results: recall@20 = 0.1494, ndcg@20 = 0.1461, map@20 = 0.0674 
+top-50 results: recall@50 = 0.1865, ndcg@50 = 0.1547, map@50 = 0.0568 
+top-100 results: recall@100 = 0.2595, ndcg@100 = 0.1819, map@100 = 0.0581 
+
+top-5 results: recall@5 = 0.1546, ndcg@5 = 0.1597, map@5 = 0.1072 
+top-10 results: recall@10 = 0.1480, ndcg@10 = 0.1515, map@10 = 0.0843 
+top-20 results: recall@20 = 0.1494, ndcg@20 = 0.1458, map@20 = 0.0674 
+top-50 results: recall@50 = 0.1866, ndcg@50 = 0.1546, map@50 = 0.0569 
+top-100 results: recall@100 = 0.2576, ndcg@100 = 0.1810, map@100 = 0.0579 
+
+top-5 results: recall@5 = 0.1537, ndcg@5 = 0.1578, map@5 = 0.1068 
+top-10 results: recall@10 = 0.1483, ndcg@10 = 0.1508, map@10 = 0.0845 
+top-20 results: recall@20 = 0.1485, ndcg@20 = 0.1451, map@20 = 0.0675 
+top-50 results: recall@50 = 0.1875, ndcg@50 = 0.1544, map@50 = 0.0569 
+top-100 results: recall@100 = 0.2581, ndcg@100 = 0.1807, map@100 = 0.0579 
+
+top-5 results: recall@5 = 0.1512, ndcg@5 = 0.1561, map@5 = 0.1045 
+top-10 results: recall@10 = 0.1454, ndcg@10 = 0.1487, map@10 = 0.0829 
+top-20 results: recall@20 = 0.1470, ndcg@20 = 0.1438, map@20 = 0.0665 
+top-50 results: recall@50 = 0.1834, ndcg@50 = 0.1524, map@50 = 0.0559 
+top-100 results: recall@100 = 0.2575, ndcg@100 = 0.1797, map@100 = 0.0571 
+
+top-5 results: recall@5 = 0.1510, ndcg@5 = 0.1572, map@5 = 0.1054 
+top-10 results: recall@10 = 0.1462, ndcg@10 = 0.1500, map@10 = 0.0834 
+top-20 results: recall@20 = 0.1492, ndcg@20 = 0.1456, map@20 = 0.0673 
+top-50 results: recall@50 = 0.1859, ndcg@50 = 0.1547, map@50 = 0.0571 
+top-100 results: recall@100 = 0.2596, ndcg@100 = 0.1821, map@100 = 0.0583 
+
+top-5 results: recall@5 = 0.1552, ndcg@5 = 0.1603, map@5 = 0.1076 
+top-10 results: recall@10 = 0.1482, ndcg@10 = 0.1519, map@10 = 0.0843 
+top-20 results: recall@20 = 0.1472, ndcg@20 = 0.1455, map@20 = 0.0675 
+top-50 results: recall@50 = 0.1860, ndcg@50 = 0.1546, map@50 = 0.0571 
+top-100 results: recall@100 = 0.2615, ndcg@100 = 0.1827, map@100 = 0.0584 
+
+top-5 results: recall@5 = 0.1554, ndcg@5 = 0.1610, map@5 = 0.1084 
+top-10 results: recall@10 = 0.1476, ndcg@10 = 0.1519, map@10 = 0.0852 
+top-20 results: recall@20 = 0.1496, ndcg@20 = 0.1465, map@20 = 0.0679 
+top-50 results: recall@50 = 0.1851, ndcg@50 = 0.1544, map@50 = 0.0572 
+top-100 results: recall@100 = 0.2594, ndcg@100 = 0.1824, map@100 = 0.0586 
+
