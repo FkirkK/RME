@@ -37,9 +37,8 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             rsd = y_u - bias_b_p[u] - bias_c_p[idx_y_u] - global_y_p
 
             if FYP is not None:  # FY is weighted matrix of Y
-                f_u, _ = get_row(FYP, u)
-                TTT = T_j.T.dot(T_j * f_u[:, np.newaxis])
-                rsd *= f_u
+                TTT = T_j.T.dot(T_j * FYP)
+                rsd *= FYP
             else:
                 TTT = T_j.T.dot(T_j)
 
@@ -59,9 +58,8 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             rsd = y_u - bias_b_n[u] - bias_c_n[idx_y_u] - global_y_n
 
             if FYN is not None:  # FY is weighted matrix of Y
-                f_u, _ = get_row(FYN, u)
-                TTT = T_j.T.dot(T_j * f_u[:, np.newaxis])
-                rsd *= f_u
+                TTT = T_j.T.dot(T_j * FYN)
+                rsd *= FYN
             else:
                 TTT = T_j.T.dot(T_j)
 
@@ -79,9 +77,8 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             T_j_p = theta_p[idx_y_u_p]
             rsd_p = y_u_p - bias_b_p[u] - bias_c_p[idx_y_u_p] - global_y_p
             if FYP is not None:  # FYP is weighted matrix of YP
-                f_u_p, _ = get_row(FYP, u)
-                TTT_p = T_j_p.T.dot(T_j_p * f_u_p[:, np.newaxis])
-                rsd_p *= f_u_p
+                TTT_p = T_j_p.T.dot(T_j_p * FYP)
+                rsd_p *= FYP
             else:
                 TTT_p = T_j_p.T.dot(T_j_p)
 
@@ -89,9 +86,8 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
             T_j_n = theta_n[idx_y_u_n]
             rsd_n = y_u_n - bias_b_n[u] - bias_c_n[idx_y_u_n] - global_y_n
             if FYN is not None:  # FYN is weighted matrix of YN
-                f_u_n, _ = get_row(FYN, u)
-                TTT_n = T_j_n.T.dot(T_j_n * f_u_n[:, np.newaxis])
-                rsd_n *= f_u_n
+                TTT_n = T_j_n.T.dot(T_j_n * FYN)
+                rsd_n *= FYN
             else:
                 TTT_n = T_j_n.T.dot(T_j_n)
 
@@ -266,9 +262,8 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
             G_i_p = gamma_p[idx_x_j_p]
             rsd_p = x_pj_p - bias_d_p[p] - bias_e_p[idx_x_j_p] - global_x_p
             if FXP is not None:
-                f_i_p, _ = get_row(FXP, p)
-                GTG_p = G_i_p.T.dot(G_i_p * f_i_p[:, np.newaxis])
-                rsd_p *= f_i_p
+                GTG_p = G_i_p.T.dot(G_i_p * FXP)
+                rsd_p *= FXP
             else:
                 GTG_p = G_i_p.T.dot(G_i_p)
 
@@ -276,9 +271,8 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
             G_i_n = gamma_n[idx_x_j_n]
             rsd_n = x_pj_n - bias_d_n[p] - bias_e_n[idx_x_j_n] - global_x_n
             if FXN is not None:
-                f_i_n, _ = get_row(FXN, p)
-                GTG_n = G_i_n.T.dot(G_i_n * f_i_n[:, np.newaxis])
-                rsd_n *= f_i_n
+                GTG_n = G_i_n.T.dot(G_i_n * FXN)
+                rsd_n *= FXN
             else:
                 GTG_n = G_i_n.T.dot(G_i_n)
 
@@ -297,9 +291,8 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
             G_i_p = gamma_p[idx_x_j_p]
             rsd_p = x_pj_p - bias_d_p[p] - bias_e_p[idx_x_j_p] - global_x_p
             if FXP is not None:
-                f_i_p, _ = get_row(FXP, p)
-                GTG_p = G_i_p.T.dot(G_i_p * f_i_p[:, np.newaxis])
-                rsd_p *= f_i_p
+                GTG_p = G_i_p.T.dot(G_i_p * FXP)
+                rsd_p *= FXP
             else:
                 GTG_p = G_i_p.T.dot(G_i_p)
 
@@ -317,9 +310,8 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
             G_i_n = gamma_n[idx_x_j_n]
             rsd_n = x_pj_n - bias_d_n[p] - bias_e_n[idx_x_j_n] - global_x_n
             if FXN is not None:
-                f_i_n, _ = get_row(FXN, p)
-                GTG_n = G_i_n.T.dot(G_i_n * f_i_n[:, np.newaxis])
-                rsd_n *= f_i_n
+                GTG_n = G_i_n.T.dot(G_i_n * FXN)
+                rsd_n *= FXN
             else:
                 GTG_n = G_i_n.T.dot(G_i_n)
 

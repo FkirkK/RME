@@ -132,22 +132,22 @@ else:
 
 
 if (FXP_weight != -1):
-    FXP = np.full_like(X_sppmi, FXP_weight)
+    FXP = FXP_weight
 else:
     FXP = None
 
 if (FXN_weight != -1):
-    FXN = np.full_like(X_neg_sppmi, FXN_weight)
+    FXN = FXN_weight
 else:
     FXN = None
 
 if (FYP_weight != -1):
-    FYP = np.full_like(Y_sppmi, FYP_weight)
+    FYP = FYP_weight
 else:
     FYP = None
 
 if (FYN_weight != -1):
-    FYN = np.full_like(Y_neg_sppmi, FYN_weight)
+    FYN = FYN_weight
 else:
     FYN = None
 
