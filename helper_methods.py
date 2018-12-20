@@ -62,6 +62,12 @@ def get_args_parser():
     parser.add_argument('--item_cooc', default='hybrid', type=str, help='what item co-occurrences should be used')
     parser.add_argument('--random_seed', default=98765, type=int, help='random seed value')
 
+    parser.add_argument('--FXP_weight', default=-1, type=float, help='')
+    parser.add_argument('--FXN_weight', default=-1, type=float, help='')
+    parser.add_argument('--FYP_weight', default=-1, type=float, help='')
+    parser.add_argument('--FYN_weight', default=-1, type=float, help='')
+
+
     return parser
 
 

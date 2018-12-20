@@ -24,6 +24,12 @@ user_cooc = args.user_cooc
 item_cooc = args.item_cooc
 random_seed = args.random_seed
 
+FXP_weight = args.FXP_weight
+FXN_weight = args.FXN_weight
+FYP_weight = args.FYP_weight
+FYN_weight = args.FYN_weight
+
+
 unique_movieId, unique_uid = helper_methods.get_unique_users_and_items(DATA_DIR)
 n_users = len(unique_uid)
 n_items = len(unique_movieId)
@@ -125,8 +131,29 @@ else:
     os.mkdir(save_dir)
 
 
+if (FXP_weight != -1):
+    FXP = np.full_like(X_sppmi, FXP_weight)
+else:
+    FXP = None
+
+if (FXN_weight != -1):
+    FXN = np.full_like(X_neg_sppmi, FXN_weight)
+else:
+    FXN = None
+
+if (FYP_weight != -1):
+    FYP = np.full_like(Y_sppmi, FYP_weight)
+else:
+    FYP = None
+
+if (FYN_weight != -1):
+    FYN = np.full_like(Y_neg_sppmi, FYN_weight)
+else:
+    FYN = None
+
 runner = model_runner.ModelRunner(train_data, vad_data, test_data, X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                       save_dir=save_dir, data_dir=DATA_DIR, randomSeed=random_seed)
+                       save_dir=save_dir, data_dir=DATA_DIR, randomSeed=random_seed,
+                       FXP=FXP, FXN = FXN, FYP=FYP, FYN=FYN)
 
 start = time.time()
 if args.model == 'wmf':

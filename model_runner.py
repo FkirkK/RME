@@ -11,7 +11,8 @@ class ModelRunner:
 
     def __init__(self, train_data, vad_data, test_data,
                  X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                 save_dir, data_dir, randomSeed):
+                 save_dir, data_dir, randomSeed,
+                 FXP=None, FXN=None, FYP=None, FYN=None):
 
         self.save_dir = save_dir
         self.DATA_DIR = data_dir
@@ -23,6 +24,12 @@ class ModelRunner:
         self.Y_sppmi = Y_sppmi
         self.X_neg_sppmi = X_neg_sppmi
         self.Y_neg_sppmi = Y_neg_sppmi
+
+        self.FXP = FXP
+        self.FXN = FXN
+        self.FYP = FYP
+        self.FYN = FYN
+
         self.randomSeed = randomSeed
 
         self.n_components = 100
@@ -139,7 +146,8 @@ class ModelRunner:
                                  lambda_beta=lam_beta, lambda_gamma_p=lam_gamma_p, lambda_gamma_n=lam_gamma_n,
                                  c0=c0, c1=c1, item_cooc=item_cooc, user_cooc=user_cooc)
             RME.fit(self.train_data, PRED_DIR, self.X_sppmi, self.X_neg_sppmi, self.Y_sppmi, self.Y_neg_sppmi,
-                      vad_data=self.vad_data, batch_users=3000, k=vad_K, clear_invalid=False, n_jobs = 15)
+                    self.FXP, self.FXN, self.FYP, self.FYN,
+                    vad_data=self.vad_data, batch_users=3000, k=vad_K, clear_invalid=False, n_jobs = 15)
 
 
             n_params = len(glob.glob(os.path.join(self.save_dir, '*.npz')))
