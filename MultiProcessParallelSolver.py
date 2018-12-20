@@ -17,7 +17,7 @@ def UserFactorUpdateWorker(out_q, lo, hi, beta, theta_p, theta_n,
                            bias_b_n, bias_c_n, global_y_n,
                            M, YP, FYP, YN, FYN, BTBpR, c0, c1, f, mu_u_p, mu_u_n, mode):
     alpha_batch = np.zeros((hi - lo, f), dtype=beta.dtype)
-    if mode == None:
+    if mode == "none" or mode == None:
         # update user factor without embedding
         for ui, u in enumerate(xrange(lo, hi)):
             m_u, idx_m_p = get_row(M, u)
@@ -246,7 +246,7 @@ def ProjectFactorUpdateWorker(out_q, lo, hi,
                               MT, XP, FXP, XN, FXN, TTTpR, c0, c1, f,
                               mu_p_p, mu_p_n, mode):
     beta_batch = np.zeros((hi - lo, f), dtype=alpha.dtype)
-    if mode == None:
+    if mode == "none" or mode == None:
 
         for pi, p in enumerate(xrange(lo, hi)):
             m_u, idx_u = get_row(MT, p)

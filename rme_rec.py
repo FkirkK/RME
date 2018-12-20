@@ -22,6 +22,7 @@ lam = args.reg
 lam_emb = args.reg_embed
 user_cooc = args.user_cooc
 item_cooc = args.item_cooc
+random_seed = args.random_seed
 
 unique_movieId, unique_uid = helper_methods.get_unique_users_and_items(DATA_DIR)
 n_users = len(unique_uid)
@@ -125,7 +126,7 @@ else:
 
 
 runner = model_runner.ModelRunner(train_data, vad_data, test_data, X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                       save_dir=save_dir, data_dir=DATA_DIR)
+                       save_dir=save_dir, data_dir=DATA_DIR, randomSeed=random_seed)
 
 start = time.time()
 if args.model == 'wmf':

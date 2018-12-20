@@ -272,7 +272,7 @@ class ParallelRME(BaseEstimator, TransformerMixin):
                                     self.n_jobs, batch_size=self.batch_size,
                                     mu=self.mu_u_n)
         self.bias_c_n = update_bias(self.theta_n, self.alpha,
-                                    self.bias_b_p, self.global_y_n, YN, FYN,
+                                    self.bias_b_n, self.global_y_n, YN, FYN,
                                     self.n_jobs, batch_size=self.batch_size,
                                     mu=self.mu_u_n)
 

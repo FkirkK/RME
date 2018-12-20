@@ -60,6 +60,7 @@ def get_args_parser():
                              'neg_sample_ratio = 0.2 --> randomly sample 2 negative items for the user')
     parser.add_argument('--user_cooc', default='hybrid', type=str, help='what user co-occurrences should be used')
     parser.add_argument('--item_cooc', default='hybrid', type=str, help='what item co-occurrences should be used')
+    parser.add_argument('--random_seed', default=98765, type=int, help='random seed value')
 
     return parser
 

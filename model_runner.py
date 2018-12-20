@@ -11,7 +11,7 @@ class ModelRunner:
 
     def __init__(self, train_data, vad_data, test_data,
                  X_sppmi, X_neg_sppmi, Y_sppmi, Y_neg_sppmi,
-                 save_dir, data_dir):
+                 save_dir, data_dir, randomSeed):
 
         self.save_dir = save_dir
         self.DATA_DIR = data_dir
@@ -23,6 +23,7 @@ class ModelRunner:
         self.Y_sppmi = Y_sppmi
         self.X_neg_sppmi = X_neg_sppmi
         self.Y_neg_sppmi = Y_neg_sppmi
+        self.randomSeed = randomSeed
 
         self.n_components = 100
         self.lam, self.lam_emb = 1e-1, 1e-1
@@ -103,7 +104,7 @@ class ModelRunner:
             CoFacto = cofactor.CoFacto(
                 n_components=n_components, max_iter=max_iter, batch_size=1000, init_std=0.01, dtype=np.float32,
                 n_jobs=n_jobs,
-                random_state=98765, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
+                random_state=self.randomSeed, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
                 lambda_alpha=lam_alpha, lambda_theta=lam_theta, lambda_beta=lam_beta, lambda_gamma=lam_gamma, c0=c0,
                 c1=c1)
             CoFacto.fit(self.train_data, self.X_sppmi, PRED_DIR=PRED_DIR, vad_data=self.vad_data, batch_users=3000, k=vad_K,
@@ -133,7 +134,7 @@ class ModelRunner:
 
             RME = ParallelRME(mu_u_p=mu_u_p, mu_p_p=mu_p_p, mu_p_n=mu_p_n, mu_u_n = mu_u_n,
                                  n_components=n_components, max_iter=max_iter, batch_size=3000, init_std=0.01, dtype=np.float32, n_jobs=n_jobs,
-                                 random_state=98765, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
+                                 random_state=self.randomSeed, save_params=True, save_dir=self.save_dir, early_stopping=True, verbose=True,
                                  lambda_alpha=lam_alpha, lambda_theta_p=lam_theta_p, lambda_theta_n=lam_theta_n,
                                  lambda_beta=lam_beta, lambda_gamma_p=lam_gamma_p, lambda_gamma_n=lam_gamma_n,
                                  c0=c0, c1=c1, item_cooc=item_cooc, user_cooc=user_cooc)
