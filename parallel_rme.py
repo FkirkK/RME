@@ -108,21 +108,21 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         XPT, XNT, FXPT, FXNT = None, None, None, None
         YPT, FYPT, YNT, FYNT = None, None, None, None
         if XP != None:
-            XPT = XP.T
+            XPT = XP
         if XN != None:
-            XNT = XN.T
+            XNT = XN
         if FXP != None:
-            FXPT = FXP.T
+            FXPT = FXP
         if FXN != None:
-            FXNT = FXN.T
+            FXNT = FXN
         if YP != None:
-            YPT = YP.T
+            YPT = YP
         if FYP != None:
-            FYPT = FYP.T
+            FYPT = FYP
         if YN != None:
-            YNT = YN.T
+            YNT = YN
         if FYN != None:
-            FYNT = FYN.T
+            FYNT = FYN
 
         self.vad_ndcg = -np.inf
         for i in xrange(self.max_iter):

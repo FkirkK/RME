@@ -382,9 +382,8 @@ def EmbeddingFactorUpdateWorker(out_q, lo, hi,
         rsd = x_jp - bias_main[idx_p] - bias_embedding[j] - intercept
         B_j = main_factor[idx_p]
         if FXT is not None:
-            f_j, _ = get_row(FXT, j)
-            BTB = B_j.T.dot(B_j * f_j[:, np.newaxis])
-            rsd *= f_j
+            BTB = B_j.T.dot(B_j * FXT)
+            rsd *= FXT
         else:
             BTB = B_j.T.dot(B_j)
 
@@ -449,8 +448,7 @@ def BiasUpdateWorker(out_q, lo, hi,
             rsd = m_i - m_i_hat
 
             if FX is not None:
-                f_i, _ = get_row(FX, i)
-                rsd *= f_i
+                rsd *= FX
 
             if rsd.size > 0:
                 bias_batch[ib] = mu * rsd.mean()
@@ -515,8 +513,7 @@ def InterceptUpdateWorker(out_q, process_id, lo, hi,
             rsd = m_i - m_i_hat
 
             if FX is not None:
-                f_i, _ = get_row(FX, i)
-                rsd *= f_i
+                rsd *= FX
             if rsd.size > 0:
                  res += rsd.sum()
 
