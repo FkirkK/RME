@@ -108,19 +108,19 @@ class ParallelRME(BaseEstimator, TransformerMixin):
         XPT, XNT, FXPT, FXNT = None, None, None, None
         YPT, FYPT, YNT, FYNT = None, None, None, None
         if XP != None:
-            XPT = XP
+            XPT = XP.T
         if XN != None:
-            XNT = XN
+            XNT = XN.T
         if FXP != None:
             FXPT = FXP
         if FXN != None:
             FXNT = FXN
         if YP != None:
-            YPT = YP
+            YPT = YP.T
         if FYP != None:
             FYPT = FYP
         if YN != None:
-            YNT = YN
+            YNT = YN.T
         if FYN != None:
             FYNT = FYN
 
